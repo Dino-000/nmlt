@@ -2,35 +2,35 @@
 #include "data.h"
 
 // Thong tin lien quan den khach hang
-char maKH[MAX_RECORD][MAX_MA];
-char tenKH[MAX_RECORD][MAX_TEN];
-char sdtKH[MAX_RECORD][MAX_SDT];
-char mailKH[MAX_RECORD][MAX_EMAIL];
-char diaChiKH [MAX_RECORD][MAX_DIA_CHI];
-char ngayDangKyKH [MAX_RECORD][MAX_NGAY];
-int loaiTheKH [MAX_RECORD];
+char maKH[100][10];
+char tenKH[100][50];
+char sdtKH[100][11];
+char mailKH[100][50];
+char diaChiKH [100][50];
+char ngayDangKyKH [100][12];
+int loaiTheKH [100];
 int soLuongKH = 0;
 
 // Thong tin lien quan den sach
-char isbnSach[MAX_RECORD][MAX_ISBN];
-char tenSach[MAX_RECORD][MAX_TEN];
-char tacGiaSach[MAX_RECORD][MAX_TEN];
-char nxbSach[MAX_RECORD][MAX_NXB];
-int namXBSach[MAX_RECORD];
-char theLoaiSach[MAX_RECORD][MAX_THE_LOAI];
-float giaNhapSach[MAX_RECORD];
-float giaBanSach[MAX_RECORD];
-int soLuongTonKhoSach[MAX_RECORD];
+char isbnSach[100][14];
+char tenSach[100][50];
+char tacGiaSach[100][50];
+char nxbSach[100][50];
+int namXBSach[100];
+char theLoaiSach[100][50];
+float giaNhapSach[100];
+float giaBanSach[100];
+int soLuongTonKhoSach[100];
 int soLuongDauSach = 0;
 
 // Thong tin lien quan den hoa don
-char maHoaDon[MAX_RECORD][MAX_MA];
-char maHoaDonKH[MAX_RECORD][MAX_MA];
-char ngayLapHoaDon[MAX_RECORD][MAX_NGAY];
-int soMatHangTrongHoaDon[MAX_RECORD];
-char isbnSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON][MAX_ISBN];
-int soLuongDauSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON];
-float tongTienHoaDon[MAX_RECORD];
+char maHoaDon[100][10];
+char maHoaDonKH[100][10];
+char ngayLapHoaDon[100][12];
+int soMatHangTrongHoaDon[100];
+char isbnSachTrongHoaDon[100][20][14];
+int soLuongDauSachTrongHoaDon[100][20];
+float tongTienHoaDon[100];
 int soLuongHoaDon = 0;
 
 void xuatDataSangFile() {

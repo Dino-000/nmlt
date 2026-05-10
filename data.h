@@ -1,36 +1,35 @@
 #pragma once
-#include "meta.h"
 
 // Khach hang
-extern char maKH[MAX_RECORD][MAX_MA];
-extern char tenKH[MAX_RECORD][MAX_TEN];
-extern char sdtKH[MAX_RECORD][MAX_SDT];
-extern char mailKH[MAX_RECORD][MAX_EMAIL];
-extern char diaChiKH[MAX_RECORD][MAX_DIA_CHI];
-extern char ngayDangKyKH[MAX_RECORD][MAX_NGAY];
-extern int loaiTheKH[MAX_RECORD];
+extern char maKH[100][10];
+extern char tenKH[100][50];
+extern char sdtKH[100][11];
+extern char mailKH[100][50];
+extern char diaChiKH[100][50];
+extern char ngayDangKyKH[100][12];
+extern int loaiTheKH[100];
 extern int soLuongKH;
 
 // Sach
-extern char isbnSach[MAX_RECORD][MAX_ISBN];
-extern char tenSach[MAX_RECORD][MAX_TEN];
-extern char tacGiaSach[MAX_RECORD][MAX_TEN];
-extern char nxbSach[MAX_RECORD][MAX_NXB];
-extern int  namXBSach[MAX_RECORD];
-extern char theLoaiSach[MAX_RECORD][MAX_THE_LOAI];
-extern float giaNhapSach[MAX_RECORD];
-extern float giaBanSach[MAX_RECORD];
-extern int soLuongTonKhoSach[MAX_RECORD];
+extern char isbnSach[100][14];
+extern char tenSach[100][50];
+extern char tacGiaSach[100][50];
+extern char nxbSach[100][50];
+extern int  namXBSach[100];
+extern char theLoaiSach[100][50];
+extern float giaNhapSach[100];
+extern float giaBanSach[100];
+extern int soLuongTonKhoSach[100];
 extern int soLuongDauSach;
 
 // Hoa don
-extern char maHoaDon[MAX_RECORD][MAX_MA];
-extern char maHoaDonKH[MAX_RECORD][MAX_MA];
-extern char ngayLapHoaDon[MAX_RECORD][MAX_NGAY];
-extern int soMatHangTrongHoaDon[MAX_RECORD];
-extern char isbnSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON][MAX_ISBN];
-extern int soLuongDauSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON];
-extern float tongTienHoaDon[MAX_RECORD];
+extern char maHoaDon[100][10];
+extern char maHoaDonKH[100][10];
+extern char ngayLapHoaDon[100][12];
+extern int soMatHangTrongHoaDon[100];
+extern char isbnSachTrongHoaDon[100][20][14];
+extern int soLuongDauSachTrongHoaDon[100][20];
+extern float tongTienHoaDon[100];
 extern int soLuongHoaDon;
 
 void xuatDataSangFile();

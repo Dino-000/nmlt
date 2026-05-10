@@ -32,8 +32,8 @@ void thongKeSachTheoTheLoai() {
         return;
     }
 
-    char dsTheLoai[MAX_RECORD][MAX_THE_LOAI];
-    int  soDauSachTheoTheLoai[MAX_RECORD], tongQuyenSachTheoTheLoai[MAX_RECORD];
+    char dsTheLoai[100][50];
+    int  soDauSachTheoTheLoai[100], tongQuyenSachTheoTheLoai[100];
     int  tongSoTheLoai = 0;
     int  i, j;
 
@@ -74,7 +74,7 @@ void thongKeKhachHangTheoLoaiThe() {
 
     int soThuong = 0, soVIP = 0, i;
     for (i = 0; i < soLuongKH; i++) {
-        loaiTheKH[i] == THE_VIP ? soVIP++ : soThuong++;
+        loaiTheKH[i] == 1 ? soVIP++ : soThuong++;
     }
 
     printf("Tong so khach hang : %d\n",  soLuongKH);
@@ -97,13 +97,13 @@ void tinhDoanhThu() {
         return;
     }
 
-    char thoiGian[MAX_NGAY];
+    char thoiGian[12];
     if (chon == 1) {
         printf("Nhap ngay (dd/mm/yyyy): ");
     } else {
         printf("Nhap thang (mm/yyyy): ");
     }
-    docChuoi(thoiGian, MAX_NGAY);
+    docChuoi(thoiGian, 12);
 
     float tongDoanhThu = 0.0f;
     int soLuongHoaDonKhop = 0, i;

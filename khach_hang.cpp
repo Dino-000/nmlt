@@ -15,18 +15,18 @@ void inThongTinKhachHang(int i) {
     printf("  Email      : %s\n", mailKH[i]);
     printf("  Dia chi    : %s\n", diaChiKH[i]);
     printf("  Ngay DK    : %s\n", ngayDangKyKH[i]);
-    printf("  Loai the   : %s\n", loaiTheKH[i] == THE_VIP ? "VIP" : "Thuong");
+    printf("  Loai the   : %s\n", loaiTheKH[i] == 1 ? "VIP" : "Thuong");
 }
 
 /*
- * Tham so: maTim[MAX_MA] - ma khach hang can tim
+ * Tham so: maKHCanTim[10] - ma khach hang can tim
  * Duyet mang maKH de tim vi tri cua khach hang.
  * Gia tri tra ve: index cua khach hang >= 0 neu tim thay, -1 neu khong tim thay
  */
-int timChisoLuongKH(char maTim[MAX_MA]) {
+int timdexKH(char maKHCanTim[10]) {
     int i;
     for (i = 0; i < soLuongKH; i++) {
-        if (strcmp(maKH[i], maTim) == 0) {
+        if (strcmp(maKH[i], maKHCanTim) == 0) {
             return i;
         }
     }
@@ -45,7 +45,7 @@ void xemDanhSachKhachHang() {
     inDuongKe(74, '-');
     int i;
     for (i = 0; i < soLuongKH; i++) {
-        printf("%-4d %-12s %-30s %-14s %-8s\n", i + 1, maKH[i], tenKH[i], sdtKH[i], loaiTheKH[i] == THE_VIP ? "VIP" : "Thuong");
+        printf("%-4d %-12s %-30s %-14s %-8s\n", i + 1, maKH[i], tenKH[i], sdtKH[i], loaiTheKH[i] == 1 ? "VIP" : "Thuong");
     }
     inDuongKe(74, '=');
 }
@@ -55,19 +55,19 @@ void xemDanhSachKhachHang() {
  * Bao loi neu ma bi trung hoac mang da day.
  */
 void themKhachHang() {
-    if (soLuongKH >= MAX_RECORD) {
-        printf("\nDanh sach khach hang da day (%d/%d)!\n", soLuongKH, MAX_RECORD);
+    if (soLuongKH >= 100) {
+        printf("\nDanh sach khach hang da day (%d/%d)!\n", soLuongKH, 100);
         return;
     }
 
-    char maNhap[MAX_MA];
+    char maNhap[10];
     printf("Ma khach hang    : ");
-    docChuoi(maNhap, MAX_MA);
+    docChuoi(maNhap, 10);
     if (strlen(maNhap) == 0) {
         printf("Ma khong duoc de trong.\n");
         return;
     }
-    if (timChisoLuongKH(maNhap) != -1) {
+    if (timdexKH(maNhap) != -1) {
         printf("Ma khach hang '%s' da ton tai!\n", maNhap);
         return;
     }
@@ -76,23 +76,23 @@ void themKhachHang() {
     strcpy(maKH[i], maNhap);
 
     printf("Ho ten           : ");
-    docChuoi(tenKH[i], MAX_TEN);
+    docChuoi(tenKH[i], 50);
 
     printf("So dien thoai    : ");
-    docChuoi(sdtKH[i], MAX_SDT);
+    docChuoi(sdtKH[i], 11);
 
     printf("Email            : ");
-    docChuoi(mailKH[i], MAX_EMAIL);
+    docChuoi(mailKH[i], 50);
 
     printf("Dia chi          : ");
-    docChuoi(diaChiKH[i], MAX_DIA_CHI);
+    docChuoi(diaChiKH[i], 50);
 
     printf("Ngay dang ky (dd/mm/yyyy): ");
-    docChuoi(ngayDangKyKH[i], MAX_NGAY);
+    docChuoi(ngayDangKyKH[i], 12);
 
     printf("Loai the (0=Thuong, 1=VIP): ");
     int loaiNhap = nhapSoNguyen();
-    loaiTheKH[i] = (loaiNhap == THE_VIP) ? THE_VIP : THE_THUONG;
+    loaiTheKH[i] = (loaiNhap == 1) ? 1 : 0;
 
     soLuongKH++;
     printf(">> Them khach hang thanh cong!\n");
@@ -103,11 +103,11 @@ void themKhachHang() {
  * Nguoi dung nhan Enter de giu nguyen gia tri cu.
  */
 void chinhSuaKhachHang() {
-    char maNhap[MAX_MA];
+    char maNhap[10];
     printf("Nhap ma khach hang can chinh sua: ");
-    docChuoi(maNhap, MAX_MA);
+    docChuoi(maNhap, 10);
 
-    int i = timChisoLuongKH(maNhap);
+    int i = timdexKH(maNhap);
     if (i == -1) {
         printf("Khong tim thay khach hang voi ma '%s'.\n", maNhap);
         return;
@@ -117,34 +117,34 @@ void chinhSuaKhachHang() {
     inThongTinKhachHang(i);
     printf("Nhap thong tin moi (Enter de giu nguyen):\n");
 
-    char chuoiTam[MAX_DIA_CHI];
+    char chuoiTam[50];
 
     printf("Ho ten [%s]: ", tenKH[i]);
-    docChuoi(chuoiTam, MAX_TEN);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(tenKH[i], chuoiTam);
     }
 
     printf("SDT [%s]: ", sdtKH[i]);
-    docChuoi(chuoiTam, MAX_SDT);
+    docChuoi(chuoiTam, 11);
     if (strlen(chuoiTam) > 0) {
         strcpy(sdtKH[i], chuoiTam);
     }
 
     printf("Email [%s]: ", mailKH[i]);
-    docChuoi(chuoiTam, MAX_EMAIL);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(mailKH[i], chuoiTam);
     }
 
     printf("Dia chi [%s]: ", diaChiKH[i]);
-    docChuoi(chuoiTam, MAX_DIA_CHI);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(diaChiKH[i], chuoiTam);
     }
 
     printf("Ngay dang ky [%s]: ", ngayDangKyKH[i]);
-    docChuoi(chuoiTam, MAX_NGAY);
+    docChuoi(chuoiTam, 12);
     if (strlen(chuoiTam) > 0) {
         strcpy(ngayDangKyKH[i], chuoiTam);
     }
@@ -152,7 +152,7 @@ void chinhSuaKhachHang() {
     printf("Loai the (0=Thuong, 1=VIP) [%d]: ", loaiTheKH[i]);
     docChuoi(chuoiTam, 5);
     if (strlen(chuoiTam) > 0) {
-        loaiTheKH[i] = (chuoiTam[0] == '1') ? THE_VIP : THE_THUONG;
+        loaiTheKH[i] = (chuoiTam[0] == '1') ? 1 : 0;
     }
 
     printf(">> Cap nhat thong tin khach hang thanh cong!\n");
@@ -163,11 +163,11 @@ void chinhSuaKhachHang() {
  * Dich chuyen mang de lap day vi tri bi xoa.
  */
 void xoaKhachHang() {
-    char maNhap[MAX_MA];
+    char maNhap[10];
     printf("Nhap ma khach hang can xoa: ");
-    docChuoi(maNhap, MAX_MA);
+    docChuoi(maNhap, 10);
 
-    int i = timChisoLuongKH(maNhap);
+    int i = timdexKH(maNhap);
     if (i == -1) {
         printf("Khong tim thay khach hang voi ma '%s'.\n", maNhap);
         return;
@@ -203,9 +203,9 @@ void xoaKhachHang() {
  * Duyet mang tim khach hang co so dien thoai chua chuoi nhap vao.
  */
 void timKhachHangTheoSDT() {
-    char sdt[MAX_SDT];
+    char sdt[11];
     printf("Nhap so dien thoai (hoac phan SDT): ");
-    docChuoi(sdt, MAX_SDT);
+    docChuoi(sdt, 11);
 
     int timThay = 0, i;
     for (i = 0; i < soLuongKH; i++) {
@@ -224,9 +224,9 @@ void timKhachHangTheoSDT() {
 
 // Duyet mang tim khach hang co ho ten chua chuoi nhap vao.
 void timKhachHangTheoHoTen() {
-    char ten[MAX_TEN];
+    char ten[50];
     printf("Nhap ho ten (hoac mot phan): ");
-    docChuoi(ten, MAX_TEN);
+    docChuoi(ten, 50);
 
     int timThay = 0, i;
     for (i = 0; i < soLuongKH; i++) {

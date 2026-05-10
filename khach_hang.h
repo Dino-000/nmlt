@@ -1,7 +1,7 @@
 #pragma once
 #include "data.h"
 
-int timChisoLuongKH(char maTim[MAX_MA]);
+int timdexKH(char maTim[10]);
 
 void xemDanhSachKhachHang();
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "meta.h"
 
-int timChisoLuongDauSach(char isbnTim[MAX_ISBN]);
+int timChisoLuongDauSach(char isbnTim[14]);
 
 void xemDanhSachSach();
 

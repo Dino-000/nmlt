@@ -9,9 +9,9 @@
  * Tim sach theo ISBN, nhap so luong hang moi ve va cong vao ton kho.
  */
 void nhapHangMoi() {
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("Nhap ISBN sach: ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
 
     int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
@@ -38,9 +38,9 @@ void nhapHangMoi() {
  * Kiem tra khong cho phep ton kho am.
  */
 void dieuChinhSoLuong() {
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("Nhap ISBN sach: ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
 
     int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
@@ -76,7 +76,7 @@ void xemTonKho() {
 
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
-        char trangThaiBuf[MAX_THE_LOAI];
+        char trangThaiBuf[50];
         if (soLuongTonKhoSach[i] == 0) {
             strcpy(trangThaiBuf, "[HET HANG]");
         } else if (soLuongTonKhoSach[i] < 5) {

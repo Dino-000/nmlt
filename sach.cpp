@@ -21,11 +21,11 @@ void inThongTinSach(int i) {
 }
 
 /*
- * Tham so: isbnTim[MAX_ISBN] - ma ISBN can tim
+ * Tham so: isbnTim[14] - ma ISBN can tim
  * Duyet mang isbnSach de tim vi tri cua sach.
  * Gia tri tra ve: Chi so >= 0 neu tim thay, -1 neu khong tim thay
  */
-int timChisoLuongDauSach(char isbnTim[MAX_ISBN]) {
+int timChisoLuongDauSach(char isbnTim[14]) {
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
         if (strcmp(isbnSach[i], isbnTim) == 0) {
@@ -57,16 +57,16 @@ void xemDanhSachSach() {
  * Bao loi neu ISBN bi trung hoac mang da day.
  */
 void themSach() {
-    if (soLuongDauSach >= MAX_RECORD) {
-        printf("\nDanh sach sach da day (%d/%d)!\n", soLuongDauSach, MAX_RECORD);
+    if (soLuongDauSach >= 100) {
+        printf("\nDanh sach sach da day (%d/%d)!\n", soLuongDauSach, 100);
         return;
     }
 
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("\n========== THEM SACH MOI ==========\n");
 
     printf("ISBN           : ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
     if (strlen(isbnNhap) == 0) {
         printf("ISBN khong duoc de trong.\n");
         return;
@@ -80,19 +80,19 @@ void themSach() {
     strcpy(isbnSach[i], isbnNhap);
 
     printf("Ten sach       : ");
-    docChuoi(tenSach[i], MAX_TEN);
+    docChuoi(tenSach[i], 50);
 
     printf("Tac gia        : ");
-    docChuoi(tacGiaSach[i], MAX_TEN);
+    docChuoi(tacGiaSach[i], 50);
 
     printf("Nha xuat ban   : ");
-    docChuoi(nxbSach[i], MAX_NXB);
+    docChuoi(nxbSach[i], 50);
 
     printf("Nam xuat ban   : ");
     namXBSach[i] = nhapSoNguyen();
 
     printf("The loai       : ");
-    docChuoi(theLoaiSach[i], MAX_THE_LOAI);
+    docChuoi(theLoaiSach[i], 50);
 
     printf("Gia nhap (VND) : ");
     giaNhapSach[i] = nhapSoThuc();
@@ -112,9 +112,9 @@ void themSach() {
  * Nguoi dung nhan Enter de giu nguyen gia tri cu.
  */
 void chinhSuaSach() {
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("Nhap ISBN sach can chinh sua: ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
 
     int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
@@ -126,22 +126,22 @@ void chinhSuaSach() {
     inThongTinSach(i);
     printf("Nhap thong tin moi (Enter de giu nguyen):\n");
 
-    char chuoiTam[MAX_NXB];
+    char chuoiTam[50];
 
     printf("Ten sach [%s]: ", tenSach[i]);
-    docChuoi(chuoiTam, MAX_TEN);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(tenSach[i], chuoiTam);
     }
 
     printf("Tac gia [%s]: ", tacGiaSach[i]);
-    docChuoi(chuoiTam, MAX_TEN);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(tacGiaSach[i], chuoiTam);
     }
 
     printf("NXB [%s]: ", nxbSach[i]);
-    docChuoi(chuoiTam, MAX_NXB);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(nxbSach[i], chuoiTam);
     }
@@ -153,7 +153,7 @@ void chinhSuaSach() {
     }
 
     printf("The loai [%s]: ", theLoaiSach[i]);
-    docChuoi(chuoiTam, MAX_THE_LOAI);
+    docChuoi(chuoiTam, 50);
     if (strlen(chuoiTam) > 0) {
         strcpy(theLoaiSach[i], chuoiTam);
     }
@@ -178,9 +178,9 @@ void chinhSuaSach() {
  * Dich chuyen mang de lap day vi tri bi xoa.
  */
 void xoaSach() {
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("Nhap ISBN sach can xoa: ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
 
     int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
@@ -225,9 +225,9 @@ void xoaSach() {
  * Tim chinh xac sach theo ISBN va hien thi chi tiet.
  */
 void timSachTheoISBN() {
-    char isbnNhap[MAX_ISBN];
+    char isbnNhap[14];
     printf("Nhap ISBN: ");
-    docChuoi(isbnNhap, MAX_ISBN);
+    docChuoi(isbnNhap, 14);
 
     int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
@@ -242,9 +242,9 @@ void timSachTheoISBN() {
  * Duyet mang tim cac sach co ten chua chuoi nhap vao.
  */
 void timSachTheoTen() {
-    char ten[MAX_TEN];
+    char ten[50];
     printf("Nhap ten sach (hoac mot phan): ");
-    docChuoi(ten, MAX_TEN);
+    docChuoi(ten, 50);
 
     int timThay = 0, i;
     for (i = 0; i < soLuongDauSach; i++) {

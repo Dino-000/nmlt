@@ -7,24 +7,24 @@
 #include "sach.h"
 
 /*
- * tinh tong tien hoa don tai chi so chiSoHD
+ * tinh tong tien hoa don tai chi so indexHD
  * ap dung: giam gia the loai (>5 quyen), giam gia VIP, VAT
- * Tham so: chiSoHD    - chi so hoa don trong mang
+ * Tham so: indexHD    - chi so hoa don trong mang
  *          chiSoKH    - chi so khach hang trong mang
  *          giaTungMH - mang float nhan gia sau giam cua tung mat hang (co the NULL neu khong can)
  * Gia tri tra ve: Tong tien cuoi cung (float)
  */
-float tinhTongTien(int chiSoHD, int chiSoKH, float giaTungMH[MAX_SACH_HOA_DON]) {
-    int soMatHang = soMatHangTrongHoaDon[chiSoHD];
+float tinhTongTien(int indexHD, int chiSoKH, float giaTungMH[20]) {
+    int soMatHang = soMatHangTrongHoaDon[indexHD];
     int j, k;
 
     // Tinh tong so luong sach o cung mot the loai trong hoa don 
-    char dsTheLoai[MAX_SACH_HOA_DON][MAX_THE_LOAI];
-    int  slTheoTL[MAX_SACH_HOA_DON];
+    char dsTheLoai[20][50];
+    int  slTheoTL[20];
     int  soTheLoai = 0;
 
     for (j = 0; j < soMatHang; j++) {
-        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[chiSoHD][j]);
+        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[indexHD][j]);
         if (chisoLuongDauSach < 0) {
             continue;
         }
@@ -43,24 +43,24 @@ float tinhTongTien(int chiSoHD, int chiSoKH, float giaTungMH[MAX_SACH_HOA_DON]) 
             slTheoTL[soTheLoai] = 0;
             soTheLoai++;
         }
-        slTheoTL[chiSoTL] += soLuongDauSachTrongHoaDon[chiSoHD][j];
+        slTheoTL[chiSoTL] += soLuongDauSachTrongHoaDon[indexHD][j];
     }
 
     // Tinh tong tien truoc khi giam gia VIP, co ap dung giam gia the loai
     float tamTinh = 0.0f;
     for (j = 0; j < soMatHang; j++) {
-        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[chiSoHD][j]);
+        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[indexHD][j]);
         if (chisoLuongDauSach < 0) {
             continue;
         }
 
-        float thanhTien = giaBanSach[chisoLuongDauSach] * (float)soLuongDauSachTrongHoaDon[chiSoHD][j];
+        float thanhTien = giaBanSach[chisoLuongDauSach] * (float)soLuongDauSachTrongHoaDon[indexHD][j];
 
         // Kiem tra va ap dung giam gia theo so luong tung the loai (>5 quyen)
         for (k = 0; k < soTheLoai; k++) {
             if (strcmp(dsTheLoai[k], theLoaiSach[chisoLuongDauSach]) == 0) {
-                if (slTheoTL[k] >= SO_SACH_CUNG_LOAI_MIN) {
-                    thanhTien *= (1.0f - GIAM_GIA_SO_LUONG);
+                if (slTheoTL[k] >= 6) {
+                    thanhTien *= (1.0f - 0.05f);
                 }
                 break;
             }
@@ -73,12 +73,12 @@ float tinhTongTien(int chiSoHD, int chiSoKH, float giaTungMH[MAX_SACH_HOA_DON]) 
     }
 
     // Ap dung giam gia VIP neu co
-    if (loaiTheKH[chiSoKH] == THE_VIP) {
-        tamTinh *= (1.0f - GIAM_GIA_VIP);
+    if (loaiTheKH[chiSoKH] == 1) {
+        tamTinh *= (1.0f - 0.10f);
     }
 
     // Tinh thue VAT
-    float tongTien = tamTinh * (1.0f + THUE_VAT);
+    float tongTien = tamTinh * (1.0f + 0.10f);
     return tongTien;
 }
 
@@ -87,38 +87,38 @@ float tinhTongTien(int chiSoHD, int chiSoKH, float giaTungMH[MAX_SACH_HOA_DON]) 
  * tinh tong tien va luu vao he thong, dong thoi cap nhat ton kho.
  */
 void lapHoaDon() {
-    if (soLuongHoaDon >= MAX_RECORD) {
-        printf("\nSo hoa don da dat gioi han (%d)!\n", MAX_RECORD);
+    if (soLuongHoaDon >= 100) {
+        printf("\nSo hoa don da dat gioi han (%d)!\n", 100);
         return;
     }
 
     // Nhap ma khach hang
-    char maKH[MAX_MA];
+    char maKH[10];
     printf("Ma khach hang: ");
-    docChuoi(maKH, MAX_MA);
-    int chiSoKH = timChisoLuongKH(maKH);
+    docChuoi(maKH, 10);
+    int chiSoKH = timdexKH(maKH);
     if (chiSoKH == -1) {
         printf("Khong tim thay khach hang voi ma '%s'.\n", maKH);
         return;
     }
-    printf("Khach hang: %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == THE_VIP ? "VIP" : "Thuong");
+    printf("Khach hang: %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
 
     // Nhap ngay lap hoa don
-    char ngay[MAX_NGAY];
+    char ngay[12];
     printf("Ngay lap (dd/mm/yyyy): ");
-    docChuoi(ngay, MAX_NGAY);
+    docChuoi(ngay, 12);
     
     // Nhap danh sach mat hang
     int soMatHang = 0;
-    char dsISBNTam[MAX_SACH_HOA_DON][MAX_ISBN];
-    int soLuongTam[MAX_SACH_HOA_DON];
+    char dsISBNTam[20][14];
+    int soLuongTam[20];
 
     printf("Nhap tung mat hang (ISBN + so luong). Nhap 'xong' de ket thuc.\n");
 
-    while (soMatHang < MAX_SACH_HOA_DON) {
-        char isbn[MAX_ISBN];
+    while (soMatHang < 20) {
+        char isbn[14];
         printf("  ISBN mat hang %d (hoac 'xong'):  \n", soMatHang + 1);
-        docChuoi(isbn, MAX_ISBN);
+        docChuoi(isbn, 14);
 
         if (strcmp(isbn, "xong") == 0 || strlen(isbn) == 0) {
             break;
@@ -154,28 +154,28 @@ void lapHoaDon() {
         return;
     }
 
-    // Luu hoa don tam vao vi tri chiSoHD de tinh tong tien
-    int chiSoHD = soLuongHoaDon;
-    sprintf(maHoaDon[chiSoHD], "HD%03d", chiSoHD + 1);
-    strcpy(maHoaDonKH[chiSoHD], maKH);
-    strcpy(ngayLapHoaDon[chiSoHD], ngay);
-    soMatHangTrongHoaDon[chiSoHD] = soMatHang;
+    // Luu hoa don tam vao vi tri indexHD de tinh tong tien
+    int indexHD = soLuongHoaDon;
+    sprintf(maHoaDon[indexHD], "HD%03d", indexHD + 1);
+    strcpy(maHoaDonKH[indexHD], maKH);
+    strcpy(ngayLapHoaDon[indexHD], ngay);
+    soMatHangTrongHoaDon[indexHD] = soMatHang;
 
     int j;
     for (j = 0; j < soMatHang; j++) {
-        strcpy(isbnSachTrongHoaDon[chiSoHD][j], dsISBNTam[j]);
-        soLuongDauSachTrongHoaDon[chiSoHD][j] = soLuongTam[j];
+        strcpy(isbnSachTrongHoaDon[indexHD][j], dsISBNTam[j]);
+        soLuongDauSachTrongHoaDon[indexHD][j] = soLuongTam[j];
     }
 
     // Tinh tong tien
-    float giaTungMH[MAX_SACH_HOA_DON];
-    float tongTien = tinhTongTien(chiSoHD, chiSoKH, giaTungMH);
-    tongTienHoaDon[chiSoHD] = tongTien;
+    float giaTungMH[20];
+    float tongTien = tinhTongTien(indexHD, chiSoKH, giaTungMH);
+    tongTienHoaDon[indexHD] = tongTien;
 
     // Hien thi tom tat hoa don
     printf("\n---------- TOM TAT HOA DON ----------\n");
-    printf("Ma hoa don  : %s\n",  maHoaDon[chiSoHD]);
-    printf("Khach hang  : %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == THE_VIP ? "VIP" : "Thuong");
+    printf("Ma hoa don  : %s\n",  maHoaDon[indexHD]);
+    printf("Khach hang  : %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
     printf("Ngay lap    : %s\n",  ngay);
     printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
     inDuongKe(80, '-');
@@ -198,22 +198,14 @@ void lapHoaDon() {
     }
     printf("%*s %14.0f\n", 66, "Tong truoc giam VIP:", tamTinhHD);
     // Check va ap dung giam gia neu co giam gia VIP
-    if (loaiTheKH[chiSoKH] == THE_VIP) {
-        printf("%*s %13.0f%%\n", 66, "Giam gia VIP (10%):", (float)(GIAM_GIA_VIP * 100));
-        tamTinhHD *= (1.0f - GIAM_GIA_VIP);
+    if (loaiTheKH[chiSoKH] == 1) {
+        printf("%*s %13.0f%%\n", 66, "Giam gia VIP (10%):", (float)(0.10f * 100));
+        tamTinhHD *= (1.0f - 0.10f);
         printf("%*s %14.0f\n", 66, "Sau giam VIP:", tamTinhHD);
     }
-    printf("%*s %14.0f\n", 66, "Thue VAT (10%):", tamTinhHD * THUE_VAT);
+    printf("%*s %14.0f\n", 66, "Thue VAT (10%):", tamTinhHD * 0.10f);
     printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTien);
     inDuongKe(80, '=');
-
-    printf("Xac nhan tao hoa don? (y/n): ");
-    char xacNhan[5];
-    docChuoi(xacNhan, 5);
-    if (xacNhan[0] != 'y' && xacNhan[0] != 'Y') {
-        printf("Huy bo hoa don.\n");
-        return;
-    }
 
     // Luu chinh thuc va cap nhat ton kho
     for (j = 0; j < soMatHang; j++) {
@@ -221,7 +213,7 @@ void lapHoaDon() {
         soLuongTonKhoSach[chisoLuongDauSach] -= soLuongTam[j];
     }
     soLuongHoaDon++;
-    printf(">> Lap hoa don %s thanh cong! Tong tien: %.0f VND\n", maHoaDon[chiSoHD], tongTien);
+    printf(">> Lap hoa don %s thanh cong! Tong tien: %.0f VND\n", maHoaDon[indexHD], tongTien);
 }
 
 /*
@@ -246,43 +238,43 @@ void xemDanhSachHoaDon() {
  * giam gia ap dung va tong tien.
  */
 void xemChiTietHoaDon() {
-    char maHD[MAX_MA];
+    char maHD[10];
     printf("Nhap ma hoa don: ");
-    docChuoi(maHD, MAX_MA);
+    docChuoi(maHD, 10);
 
     // Tim hoa don
-    int chiSoHD = -1, i;
+    int indexHD = -1, i;
     for (i = 0; i < soLuongHoaDon; i++) {
         if (strcmp(maHoaDon[i], maHD) == 0) {
-            chiSoHD = i;
+            indexHD = i;
             break;
         }
     }
-    if (chiSoHD == -1) {
+    if (indexHD == -1) {
         printf("Khong tim thay hoa don voi ma '%s'.\n", maHD);
         return;
     }
 
-    int chiSoKH = timChisoLuongKH(maHoaDonKH[chiSoHD]);
+    int chiSoKH = timdexKH(maHoaDonKH[indexHD]);
 
-    printf("\n===== HOA DON: %s =====\n",    maHoaDon[chiSoHD]);
-    printf("Khach hang  : %s",               maHoaDonKH[chiSoHD]);
-    if (chiSoKH >= 0) printf(" (%s - %s)", tenKH[chiSoKH], loaiTheKH[chiSoKH] == THE_VIP ? "VIP" : "Thuong");
-    printf("\nNgay lap    : %s\n",            ngayLapHoaDon[chiSoHD]);
+    printf("\n===== HOA DON: %s =====\n",    maHoaDon[indexHD]);
+    printf("Khach hang  : %s",               maHoaDonKH[indexHD]);
+    if (chiSoKH >= 0) printf(" (%s - %s)", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
+    printf("\nNgay lap    : %s\n",            ngayLapHoaDon[indexHD]);
 
     printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
     inDuongKe(80, '-');
 
-    float giaTungMH[MAX_SACH_HOA_DON];
+    float giaTungMH[20];
     float tongTien = (chiSoKH >= 0)
-                     ? tinhTongTien(chiSoHD, chiSoKH, giaTungMH)
-                     : tongTienHoaDon[chiSoHD];
+                     ? tinhTongTien(indexHD, chiSoKH, giaTungMH)
+                     : tongTienHoaDon[indexHD];
 
     float tamTinh = 0.0f;
     int j;
-    for (j = 0; j < soMatHangTrongHoaDon[chiSoHD]; j++) {
-        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[chiSoHD][j]);
-        char tenSachBuf[MAX_TEN];
+    for (j = 0; j < soMatHangTrongHoaDon[indexHD]; j++) {
+        int chisoLuongDauSach = timChisoLuongDauSach(isbnSachTrongHoaDon[indexHD][j]);
+        char tenSachBuf[50];
         if (chisoLuongDauSach >= 0) {
             strcpy(tenSachBuf, tenSach[chisoLuongDauSach]);
         } else {
@@ -291,20 +283,20 @@ void xemChiTietHoaDon() {
         float donGia = (chisoLuongDauSach >= 0) ? giaBanSach[chisoLuongDauSach] : 0.0f;
         float thanhTien = (chiSoKH >= 0) ? giaTungMH[j] : 0.0f;
 
-        printf("%-14s %-28s %8d %12.0f %14.0f\n", isbnSachTrongHoaDon[chiSoHD][j], tenSachBuf, soLuongDauSachTrongHoaDon[chiSoHD][j], donGia, thanhTien);
+        printf("%-14s %-28s %8d %12.0f %14.0f\n", isbnSachTrongHoaDon[indexHD][j], tenSachBuf, soLuongDauSachTrongHoaDon[indexHD][j], donGia, thanhTien);
         tamTinh += thanhTien;
     }
 
     inDuongKe(80, '-');
     if (chiSoKH >= 0) {
         printf("%*s %14.0f\n", 66, "Tong truoc giam:", tamTinh);
-        if (loaiTheKH[chiSoKH] == THE_VIP) {
-            tamTinh *= (1.0f - GIAM_GIA_VIP);
+        if (loaiTheKH[chiSoKH] == 1) {
+            tamTinh *= (1.0f - 0.10f);
             printf("%*s %14.0f\n", 66, "Sau giam VIP (10%):", tamTinh);
         }
-        printf("%*s %14.0f\n", 66, "VAT (10%):", tamTinh * THUE_VAT);
+        printf("%*s %14.0f\n", 66, "VAT (10%):", tamTinh * 0.10f);
     }
-    printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTienHoaDon[chiSoHD]);
+    printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTienHoaDon[indexHD]);
     inDuongKe(80, '=');
 }
 
