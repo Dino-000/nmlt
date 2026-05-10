@@ -191,11 +191,13 @@ void lapHoaDon() {
     }
 
     inDuongKe(80, '-');
+    // Check va ap dung giam gia neu co giam gia theo so luong tung the loai
     if (tamTinhHD < tamTinhRaw - 0.5f) {
         printf("%*s %14.0f\n", 66, "Tong chua giam:", tamTinhRaw);
         printf("%*s %14.0f\n", 66, "Giam cung the loai (5%):", tamTinhHD - tamTinhRaw);
     }
     printf("%*s %14.0f\n", 66, "Tong truoc giam VIP:", tamTinhHD);
+    // Check va ap dung giam gia neu co giam gia VIP
     if (kh_loaiThe[chiSoKH] == THE_VIP) {
         printf("%*s %13.0f%%\n", 66, "Giam gia VIP (10%):", (float)(GIAM_GIA_VIP * 100));
         tamTinhHD *= (1.0f - GIAM_GIA_VIP);
@@ -248,7 +250,7 @@ void xemChiTietHoaDon() {
     printf("Nhap ma hoa don: ");
     docChuoi(maHD, MAX_MA);
 
-    /* Tim hoa don */
+    // Tim hoa don
     int chiSoHD = -1, i;
     for (i = 0; i < soHoaDon; i++) {
         if (strcmp(hd_ma[i], maHD) == 0) {
