@@ -1,6 +1,6 @@
 #pragma once
 
-void thongKeTongSoSach();
+void thongKeTongsoLuongDauSach();
 
 void thongKeSachTheoTheLoai();
 

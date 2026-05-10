@@ -1,32 +1,36 @@
 #pragma once
+#include "meta.h"
 
-#include "constants.h"
+// Khach hang
+extern char maKH[MAX_RECORD][MAX_MA];
+extern char tenKH[MAX_RECORD][MAX_TEN];
+extern char sdtKH[MAX_RECORD][MAX_SDT];
+extern char mailKH[MAX_RECORD][MAX_EMAIL];
+extern char diaChiKH[MAX_RECORD][MAX_DIA_CHI];
+extern char ngayDangKyKH[MAX_RECORD][MAX_NGAY];
+extern int loaiTheKH[MAX_RECORD];
+extern int soLuongKH;
 
-extern char kh_ma      [MAX_KHACH_HANG][MAX_MA];
-extern char kh_hoTen   [MAX_KHACH_HANG][MAX_TEN];
-extern char kh_sdt     [MAX_KHACH_HANG][MAX_SDT];
-extern char kh_email   [MAX_KHACH_HANG][MAX_EMAIL];
-extern char kh_diaChi  [MAX_KHACH_HANG][MAX_DIA_CHI];
-extern char kh_ngayDK  [MAX_KHACH_HANG][MAX_NGAY];
-extern int  kh_loaiThe [MAX_KHACH_HANG];
-extern int  soKhachHang;
+// Sach
+extern char isbnSach[MAX_RECORD][MAX_ISBN];
+extern char tenSach[MAX_RECORD][MAX_TEN];
+extern char tacGiaSach[MAX_RECORD][MAX_TEN];
+extern char nxbSach[MAX_RECORD][MAX_NXB];
+extern int  namXBSach[MAX_RECORD];
+extern char theLoaiSach[MAX_RECORD][MAX_THE_LOAI];
+extern float giaNhapSach[MAX_RECORD];
+extern float giaBanSach[MAX_RECORD];
+extern int soLuongTonKhoSach[MAX_RECORD];
+extern int soLuongDauSach;
 
-extern char  sach_isbn    [MAX_SACH][MAX_ISBN];
-extern char  sach_ten     [MAX_SACH][MAX_TEN];
-extern char  sach_tacGia  [MAX_SACH][MAX_TEN];
-extern char  sach_nxb     [MAX_SACH][MAX_NXB];
-extern int   sach_namXB   [MAX_SACH];
-extern char  sach_theLoai [MAX_SACH][MAX_THE_LOAI];
-extern float sach_giaNhap [MAX_SACH];
-extern float sach_giaBan  [MAX_SACH];
-extern int   sach_soLuong [MAX_SACH];
-extern int   soSach;
+// Hoa don
+extern char maHoaDon[MAX_RECORD][MAX_MA];
+extern char maHoaDonKH[MAX_RECORD][MAX_MA];
+extern char ngayLapHoaDon[MAX_RECORD][MAX_NGAY];
+extern int soMatHangTrongHoaDon[MAX_RECORD];
+extern char isbnSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON][MAX_ISBN];
+extern int soLuongDauSachTrongHoaDon[MAX_RECORD][MAX_SACH_HOA_DON];
+extern float tongTienHoaDon[MAX_RECORD];
+extern int soLuongHoaDon;
 
-extern char  hd_ma        [MAX_HOA_DON][MAX_MA];
-extern char  hd_maKH      [MAX_HOA_DON][MAX_MA];
-extern char  hd_ngay      [MAX_HOA_DON][MAX_NGAY];
-extern int   hd_soMatHang [MAX_HOA_DON];
-extern char  hd_isbn      [MAX_HOA_DON][MAX_MAT_HANG][MAX_ISBN];
-extern int   hd_soLuong   [MAX_HOA_DON][MAX_MAT_HANG];
-extern float hd_tongTien  [MAX_HOA_DON];
-extern int   soHoaDon;
+void xuatDataSangFile();

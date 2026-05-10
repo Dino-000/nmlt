@@ -17,7 +17,7 @@ void xoaBuffer() {
  *          doDaiToiDa - do dai toi da ke ca null terminator
  * Doc mot dong tu stdin, cat bo ki tu xuong dong o cuoi neu co.
  */
-void docChuoi(char* chuoi, int doDaiToiDa) {
+void docChuoi(char chuoi[], int doDaiToiDa) {
     if (fgets(chuoi, doDaiToiDa, stdin) != NULL) {
         int doDai = (int)strlen(chuoi);
         if (doDai > 0 && chuoi[doDai - 1] == '\n') {
@@ -57,7 +57,7 @@ float nhapSoThuc() {
  * Dung strstr de kiem tra sự xuat hien cua 'mau' trong 'chuoi'.
  * Gia tri tra ve: 1 neu tim thay, 0 neu khong
  */
-int chuaXauCon(const char* chuoi, const char* mau) {
+int chuaXauCon(const char chuoi[], const char mau[]) {
     return (strstr(chuoi, mau) != NULL) ? 1 : 0;
 }
 

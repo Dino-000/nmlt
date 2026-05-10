@@ -5,20 +5,20 @@
 #include <string.h>
 
 /*
- * Cong toan bo sach_soLuong[i] va hien thi ket qua.
+ * Cong toan bo soLuongTonKhoSach[i] va hien thi ket qua.
  */
-void thongKeTongSoSach() {
-    if (soSach == 0) {
+void thongKeTongsoLuongDauSach() {
+    if (soLuongDauSach == 0) {
         printf("Chua co sach nao trong he thong.\n");
         return;
     }
 
     int tongSoQuyen = 0, i;
-    for (i = 0; i < soSach; i++) {
-        tongSoQuyen += sach_soLuong[i];
+    for (i = 0; i < soLuongDauSach; i++) {
+        tongSoQuyen += soLuongTonKhoSach[i];
     }
 
-    printf("Tong so dau sach : %d\n", soSach);
+    printf("Tong so dau sach : %d\n", soLuongDauSach);
     printf("Tong so quyen : %d quyen\n", tongSoQuyen);
 }
 
@@ -27,32 +27,32 @@ void thongKeTongSoSach() {
  * va tong so quyen theo tung the loai roi hien thi.
  */
 void thongKeSachTheoTheLoai() {
-    if (soSach == 0) {
+    if (soLuongDauSach == 0) {
         printf("Chua co sach nao trong he thong.\n");
         return;
     }
 
-    char dsTheLoai[MAX_SACH][MAX_THE_LOAI];
-    int  soDauSachTheoTheLoai[MAX_SACH], tongQuyenSachTheoTheLoai[MAX_SACH];
+    char dsTheLoai[MAX_RECORD][MAX_THE_LOAI];
+    int  soDauSachTheoTheLoai[MAX_RECORD], tongQuyenSachTheoTheLoai[MAX_RECORD];
     int  tongSoTheLoai = 0;
     int  i, j;
 
     //
-    for (i = 0; i < soSach; i++) {
+    for (i = 0; i < soLuongDauSach; i++) {
         bool sachCungTheLoai = false;
         for (j = 0; j < tongSoTheLoai; j++) {
-            if (strcmp(dsTheLoai[j], sach_theLoai[i]) == 0) {
+            if (strcmp(dsTheLoai[j], theLoaiSach[i]) == 0) {
                 soDauSachTheoTheLoai[j]++;
-                tongQuyenSachTheoTheLoai[j] += sach_soLuong[i];
+                tongQuyenSachTheoTheLoai[j] += soLuongTonKhoSach[i];
                 sachCungTheLoai = true;
                 break;
             }
         }
         // Tao moi record neu chua ton tai
         if (!sachCungTheLoai) {
-            strcpy(dsTheLoai[tongSoTheLoai], sach_theLoai[i]);
+            strcpy(dsTheLoai[tongSoTheLoai], theLoaiSach[i]);
             soDauSachTheoTheLoai[tongSoTheLoai] = 1;
-            tongQuyenSachTheoTheLoai[tongSoTheLoai] = sach_soLuong[i];
+            tongQuyenSachTheoTheLoai[tongSoTheLoai] = soLuongTonKhoSach[i];
             tongSoTheLoai++;
         }
     }
@@ -67,24 +67,24 @@ void thongKeSachTheoTheLoai() {
  * Dem so khach hang Thuong va VIP va hien thi.
  */
 void thongKeKhachHangTheoLoaiThe() {
-    if (soKhachHang == 0) {
+    if (soLuongKH == 0) {
         printf("Chua co khach hang nao trong he thong.\n");
         return;
     }
 
     int soThuong = 0, soVIP = 0, i;
-    for (i = 0; i < soKhachHang; i++) {
-        kh_loaiThe[i] == THE_VIP ? soVIP++ : soThuong++;
+    for (i = 0; i < soLuongKH; i++) {
+        loaiTheKH[i] == THE_VIP ? soVIP++ : soThuong++;
     }
 
-    printf("Tong so khach hang : %d\n",  soKhachHang);
+    printf("Tong so khach hang : %d\n",  soLuongKH);
     printf("  The Thuong        : %d\n", soThuong);
     printf("  The VIP           : %d\n", soVIP);
 }
 
 /*
  * Cho nguoi dung chon tinh theo ngay (dd/mm/yyyy) hoac thang (mm/yyyy).
- * Duyet danh sach hoa don, cong tong hd_tongTien cua cac hoa don khop.
+ * Duyet danh sach hoa don, cong tong tongTienHoaDon cua cac hoa don khop.
  */
 void tinhDoanhThu() {
     printf("1. Theo ngay  (dd/mm/yyyy)\n");
@@ -106,42 +106,42 @@ void tinhDoanhThu() {
     docChuoi(thoiGian, MAX_NGAY);
 
     float tongDoanhThu = 0.0f;
-    int soHoaDonKhop = 0, i;
+    int soLuongHoaDonKhop = 0, i;
 
-    for (i = 0; i < soHoaDon; i++) {
+    for (i = 0; i < soLuongHoaDon; i++) {
         int trungKhop = 0;
         if (chon == 1) {
             // So sanh chinh xac toan bo ngay dd/mm/yyyy
-            trungKhop = (strcmp(hd_ngay[i], thoiGian) == 0);
+            trungKhop = (strcmp(ngayLapHoaDon[i], thoiGian) == 0);
         } else {
-            // So sanh phan mm/yyyy: hd_ngay[i] = "dd/mm/yyyy", bo 3 ki tu dau
-            trungKhop = (strcmp(hd_ngay[i] + 3, thoiGian) == 0);
+            // So sanh phan mm/yyyy: ngayLapHoaDon[i] = "dd/mm/yyyy", bo 3 ki tu dau
+            trungKhop = (strcmp(ngayLapHoaDon[i] + 3, thoiGian) == 0);
         }
         if (trungKhop) {
-            tongDoanhThu += hd_tongTien[i];
-            soHoaDonKhop++;
+            tongDoanhThu += tongTienHoaDon[i];
+            soLuongHoaDonKhop++;
         }
     }
 
     if (chon == 1) {
-        printf("Ngay %s: %d hoa don, doanh thu = %.0f VND\n", thoiGian, soHoaDonKhop, tongDoanhThu);
+        printf("Ngay %s: %d hoa don, doanh thu = %.0f VND\n", thoiGian, soLuongHoaDonKhop, tongDoanhThu);
     } else {
-        printf("Thang %s: %d hoa don, doanh thu = %.0f VND\n", thoiGian, soHoaDonKhop, tongDoanhThu);
+        printf("Thang %s: %d hoa don, doanh thu = %.0f VND\n", thoiGian, soLuongHoaDonKhop, tongDoanhThu);
     }
 }
 
 /*
- * Duyet mang, in thong tin cac sach co sach_soLuong = 0.
+ * Duyet mang, in thong tin cac sach co soLuongTonKhoSach = 0.
  */
 void thongKeSachHetHang() {
     int timThay = 0, i;
-    for (i = 0; i < soSach; i++) {
-        if (sach_soLuong[i] == 0) {
+    for (i = 0; i < soLuongDauSach; i++) {
+        if (soLuongTonKhoSach[i] == 0) {
             if (timThay == 0) {
                 printf("%-14s %-32s %-20s %-12s\n", "ISBN", "Ten Sach", "Tac Gia", "The Loai");
                 inDuongKe(82, '-');
             }
-            printf("%-14s %-32s %-20s %-12s\n", sach_isbn[i], sach_ten[i], sach_tacGia[i], sach_theLoai[i]);
+            printf("%-14s %-32s %-20s %-12s\n", isbnSach[i], tenSach[i], tacGiaSach[i], theLoaiSach[i]);
             timThay++;
         }
     }
@@ -170,7 +170,7 @@ void menuThongKe() {
 
         switch (luaChon) {
             case 1:
-                thongKeTongSoSach();
+                thongKeTongsoLuongDauSach();
                 break;
             case 2:
                 thongKeSachTheoTheLoai();

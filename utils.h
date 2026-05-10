@@ -2,12 +2,12 @@
 
 void xoaBuffer();
 
-void docChuoi(char* chuoi, int doDaiToiDa);
+void docChuoi(char chuoi[], int doDaiToiDa);
 
 int nhapSoNguyen();
 
 float nhapSoThuc();
 
-int chuaXauCon(const char* chuoi, const char* mau);
+int chuaXauCon(const char chuoi[], const char mau[]);
 
 void inDuongKe(int soKy, char kyTu);

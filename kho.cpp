@@ -13,14 +13,14 @@ void nhapHangMoi() {
     printf("Nhap ISBN sach: ");
     docChuoi(isbnNhap, MAX_ISBN);
 
-    int i = timChiSoSach(isbnNhap);
+    int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
         printf("Khong tim thay sach voi ISBN '%s'.\n", isbnNhap);
         return;
     }
 
-    printf("Sach       : %s\n", sach_ten[i]);
-    printf("Ton kho hien tai: %d quyen\n", sach_soLuong[i]);
+    printf("Sach       : %s\n", tenSach[i]);
+    printf("Ton kho hien tai: %d quyen\n", soLuongTonKhoSach[i]);
     printf("So luong nhap them: ");
     int soLuong = nhapSoNguyen();
 
@@ -29,8 +29,8 @@ void nhapHangMoi() {
         return;
     }
 
-    sach_soLuong[i] += soLuong;
-    printf(">> Cap nhat thanh cong! Ton kho moi: %d quyen.\n", sach_soLuong[i]);
+    soLuongTonKhoSach[i] += soLuong;
+    printf(">> Cap nhat thanh cong! Ton kho moi: %d quyen.\n", soLuongTonKhoSach[i]);
 }
 
 /*
@@ -42,31 +42,31 @@ void dieuChinhSoLuong() {
     printf("Nhap ISBN sach: ");
     docChuoi(isbnNhap, MAX_ISBN);
 
-    int i = timChiSoSach(isbnNhap);
+    int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
         printf("Khong tim thay sach voi ISBN '%s'.\n", isbnNhap);
         return;
     }
 
-    printf("Sach            : %s\n", sach_ten[i]);
-    printf("Ton kho hien tai: %d quyen\n", sach_soLuong[i]);
+    printf("Sach            : %s\n", tenSach[i]);
+    printf("Ton kho hien tai: %d quyen\n", soLuongTonKhoSach[i]);
     printf("Nhap so luong thay doi (+/-, vd: +20 hoac -5): ");
     int thayDoi = nhapSoNguyen();
 
-    if (sach_soLuong[i] + thayDoi < 0) {
-        printf("Khong hop le! so luong ton kho khong duoc phep am (%d + %d = %d).\n", sach_soLuong[i], thayDoi, sach_soLuong[i] + thayDoi);
+    if (soLuongTonKhoSach[i] + thayDoi < 0) {
+        printf("Khong hop le! so luong ton kho khong duoc phep am (%d + %d = %d).\n", soLuongTonKhoSach[i], thayDoi, soLuongTonKhoSach[i] + thayDoi);
         return;
     }
 
-    sach_soLuong[i] += thayDoi;
-    printf(">> Dieu chinh thanh cong! Ton kho moi: %d quyen.\n", sach_soLuong[i]);
+    soLuongTonKhoSach[i] += thayDoi;
+    printf(">> Dieu chinh thanh cong! Ton kho moi: %d quyen.\n", soLuongTonKhoSach[i]);
 }
 
 /*
  * In bang trang thai ton kho, danh dau sap het hang (< 5) va het hang (= 0).
  */
 void xemTonKho() {
-    if (soSach == 0) {
+    if (soLuongDauSach == 0) {
         printf("\nChua co sach nao trong he thong.\n");
         return;
     }
@@ -75,16 +75,16 @@ void xemTonKho() {
     inDuongKe(82, '-');
 
     int i;
-    for (i = 0; i < soSach; i++) {
-        const char* trangThai;
-        if (sach_soLuong[i] == 0) {
-            trangThai = "[HET HANG]";
-        } else if (sach_soLuong[i] < 5) {
-            trangThai = "[SAP HET]";
+    for (i = 0; i < soLuongDauSach; i++) {
+        char trangThaiBuf[MAX_THE_LOAI];
+        if (soLuongTonKhoSach[i] == 0) {
+            strcpy(trangThaiBuf, "[HET HANG]");
+        } else if (soLuongTonKhoSach[i] < 5) {
+            strcpy(trangThaiBuf, "[SAP HET]");
         } else {
-            trangThai = "";
+            trangThaiBuf[0] = '\0';
         }
-        printf("%-14s %-32s %-12s %8d  %s\n", sach_isbn[i], sach_ten[i], sach_theLoai[i], sach_soLuong[i], trangThai);
+        printf("%-14s %-32s %-12s %8d  %s\n", isbnSach[i], tenSach[i], theLoaiSach[i], soLuongTonKhoSach[i], trangThaiBuf);
     }
     inDuongKe(82, '=');
 }

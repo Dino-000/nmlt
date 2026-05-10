@@ -9,26 +9,26 @@
  * Tham so: i - chi so trong mang du lieu
  * ------------------------------------------------------- */
 void inThongTinSach(int i) {
-    printf("  ISBN        : %s\n",   sach_isbn[i]);
-    printf("  Ten sach    : %s\n",   sach_ten[i]);
-    printf("  Tac gia     : %s\n",   sach_tacGia[i]);
-    printf("  NXB         : %s\n",   sach_nxb[i]);
-    printf("  Nam XB      : %d\n",   sach_namXB[i]);
-    printf("  The loai    : %s\n",   sach_theLoai[i]);
-    printf("  Gia nhap    : %.0f VND\n", sach_giaNhap[i]);
-    printf("  Gia ban     : %.0f VND\n", sach_giaBan[i]);
-    printf("  Ton kho     : %d quyen\n", sach_soLuong[i]);
+    printf("  ISBN        : %s\n",   isbnSach[i]);
+    printf("  Ten sach    : %s\n",   tenSach[i]);
+    printf("  Tac gia     : %s\n",   tacGiaSach[i]);
+    printf("  NXB         : %s\n",   nxbSach[i]);
+    printf("  Nam XB      : %d\n",   namXBSach[i]);
+    printf("  The loai    : %s\n",   theLoaiSach[i]);
+    printf("  Gia nhap    : %.0f VND\n", giaNhapSach[i]);
+    printf("  Gia ban     : %.0f VND\n", giaBanSach[i]);
+    printf("  Ton kho     : %d quyen\n", soLuongTonKhoSach[i]);
 }
 
 /*
  * Tham so: isbnTim[MAX_ISBN] - ma ISBN can tim
- * Duyet mang sach_isbn de tim vi tri cua sach.
+ * Duyet mang isbnSach de tim vi tri cua sach.
  * Gia tri tra ve: Chi so >= 0 neu tim thay, -1 neu khong tim thay
  */
-int timChiSoSach(char isbnTim[MAX_ISBN]) {
+int timChisoLuongDauSach(char isbnTim[MAX_ISBN]) {
     int i;
-    for (i = 0; i < soSach; i++) {
-        if (strcmp(sach_isbn[i], isbnTim) == 0) {
+    for (i = 0; i < soLuongDauSach; i++) {
+        if (strcmp(isbnSach[i], isbnTim) == 0) {
             return i;
         }
     }
@@ -39,15 +39,15 @@ int timChiSoSach(char isbnTim[MAX_ISBN]) {
  * In bang danh sach tat ca sach hien co trong he thong.
  */
 void xemDanhSachSach() {
-    if (soSach == 0) {
+    if (soLuongDauSach == 0) {
         printf("\nChua co sach nao trong he thong.\n");
         return;
     }
     printf("%-4s %-14s %-28s %-20s %-12s %-8s\n", "STT", "ISBN", "Ten Sach", "Tac Gia", "The Loai", "Ton Kho");
     inDuongKe(90, '-');
     int i;
-    for (i = 0; i < soSach; i++) {
-        printf("%-4d %-14s %-28s %-20s %-12s %-8d\n", i + 1, sach_isbn[i], sach_ten[i], sach_tacGia[i], sach_theLoai[i], sach_soLuong[i]);
+    for (i = 0; i < soLuongDauSach; i++) {
+        printf("%-4d %-14s %-28s %-20s %-12s %-8d\n", i + 1, isbnSach[i], tenSach[i], tacGiaSach[i], theLoaiSach[i], soLuongTonKhoSach[i]);
     }
     inDuongKe(90, '=');
 }
@@ -57,8 +57,8 @@ void xemDanhSachSach() {
  * Bao loi neu ISBN bi trung hoac mang da day.
  */
 void themSach() {
-    if (soSach >= MAX_SACH) {
-        printf("\nDanh sach sach da day (%d/%d)!\n", soSach, MAX_SACH);
+    if (soLuongDauSach >= MAX_RECORD) {
+        printf("\nDanh sach sach da day (%d/%d)!\n", soLuongDauSach, MAX_RECORD);
         return;
     }
 
@@ -71,39 +71,39 @@ void themSach() {
         printf("ISBN khong duoc de trong.\n");
         return;
     }
-    if (timChiSoSach(isbnNhap) != -1) {
+    if (timChisoLuongDauSach(isbnNhap) != -1) {
         printf("ISBN '%s' da ton tai!\n", isbnNhap);
         return;
     }
 
-    int i = soSach;
-    strcpy(sach_isbn[i], isbnNhap);
+    int i = soLuongDauSach;
+    strcpy(isbnSach[i], isbnNhap);
 
     printf("Ten sach       : ");
-    docChuoi(sach_ten[i], MAX_TEN);
+    docChuoi(tenSach[i], MAX_TEN);
 
     printf("Tac gia        : ");
-    docChuoi(sach_tacGia[i], MAX_TEN);
+    docChuoi(tacGiaSach[i], MAX_TEN);
 
     printf("Nha xuat ban   : ");
-    docChuoi(sach_nxb[i], MAX_NXB);
+    docChuoi(nxbSach[i], MAX_NXB);
 
     printf("Nam xuat ban   : ");
-    sach_namXB[i] = nhapSoNguyen();
+    namXBSach[i] = nhapSoNguyen();
 
     printf("The loai       : ");
-    docChuoi(sach_theLoai[i], MAX_THE_LOAI);
+    docChuoi(theLoaiSach[i], MAX_THE_LOAI);
 
     printf("Gia nhap (VND) : ");
-    sach_giaNhap[i] = nhapSoThuc();
+    giaNhapSach[i] = nhapSoThuc();
 
     printf("Gia ban  (VND) : ");
-    sach_giaBan[i] = nhapSoThuc();
+    giaBanSach[i] = nhapSoThuc();
 
     printf("So luong nhap  : ");
-    sach_soLuong[i] = nhapSoNguyen();
+    soLuongTonKhoSach[i] = nhapSoNguyen();
 
-    soSach++;
+    soLuongDauSach++;
     printf(">> Them sach thanh cong!\n");
 }
 
@@ -116,7 +116,7 @@ void chinhSuaSach() {
     printf("Nhap ISBN sach can chinh sua: ");
     docChuoi(isbnNhap, MAX_ISBN);
 
-    int i = timChiSoSach(isbnNhap);
+    int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
         printf("Khong tim thay sach voi ISBN '%s'.\n", isbnNhap);
         return;
@@ -128,46 +128,46 @@ void chinhSuaSach() {
 
     char chuoiTam[MAX_NXB];
 
-    printf("Ten sach [%s]: ", sach_ten[i]);
+    printf("Ten sach [%s]: ", tenSach[i]);
     docChuoi(chuoiTam, MAX_TEN);
     if (strlen(chuoiTam) > 0) {
-        strcpy(sach_ten[i], chuoiTam);
+        strcpy(tenSach[i], chuoiTam);
     }
 
-    printf("Tac gia [%s]: ", sach_tacGia[i]);
+    printf("Tac gia [%s]: ", tacGiaSach[i]);
     docChuoi(chuoiTam, MAX_TEN);
     if (strlen(chuoiTam) > 0) {
-        strcpy(sach_tacGia[i], chuoiTam);
+        strcpy(tacGiaSach[i], chuoiTam);
     }
 
-    printf("NXB [%s]: ", sach_nxb[i]);
+    printf("NXB [%s]: ", nxbSach[i]);
     docChuoi(chuoiTam, MAX_NXB);
     if (strlen(chuoiTam) > 0) {
-        strcpy(sach_nxb[i], chuoiTam);
+        strcpy(nxbSach[i], chuoiTam);
     }
 
-    printf("Nam XB [%d] (0=giu nguyen): ", sach_namXB[i]);
+    printf("Nam XB [%d] (0=giu nguyen): ", namXBSach[i]);
     int namMoi = nhapSoNguyen();
     if (namMoi != 0) {
-        sach_namXB[i] = namMoi;
+        namXBSach[i] = namMoi;
     }
 
-    printf("The loai [%s]: ", sach_theLoai[i]);
+    printf("The loai [%s]: ", theLoaiSach[i]);
     docChuoi(chuoiTam, MAX_THE_LOAI);
     if (strlen(chuoiTam) > 0) {
-        strcpy(sach_theLoai[i], chuoiTam);
+        strcpy(theLoaiSach[i], chuoiTam);
     }
 
-    printf("Gia nhap [%.0f] (-1=giu nguyen): ", sach_giaNhap[i]);
+    printf("Gia nhap [%.0f] (-1=giu nguyen): ", giaNhapSach[i]);
     float giaMoi = nhapSoThuc();
     if (giaMoi >= 0) {
-        sach_giaNhap[i] = giaMoi;
+        giaNhapSach[i] = giaMoi;
     }
 
-    printf("Gia ban [%.0f] (-1=giu nguyen): ", sach_giaBan[i]);
+    printf("Gia ban [%.0f] (-1=giu nguyen): ", giaBanSach[i]);
     giaMoi = nhapSoThuc();
     if (giaMoi >= 0) {
-        sach_giaBan[i] = giaMoi;
+        giaBanSach[i] = giaMoi;
     }
 
     printf(">> Cap nhat thong tin sach thanh cong!\n");
@@ -182,14 +182,14 @@ void xoaSach() {
     printf("Nhap ISBN sach can xoa: ");
     docChuoi(isbnNhap, MAX_ISBN);
 
-    int i = timChiSoSach(isbnNhap);
+    int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
         printf("Khong tim thay sach voi ISBN '%s'.\n", isbnNhap);
         return;
     }
 
-    if (sach_soLuong[i] != 0) {
-        printf("Khong the xoa! Sach '%s' con %d quyen trong kho.\n", sach_ten[i], sach_soLuong[i]);
+    if (soLuongTonKhoSach[i] != 0) {
+        printf("Khong the xoa! Sach '%s' con %d quyen trong kho.\n", tenSach[i], soLuongTonKhoSach[i]);
         return;
     }
 
@@ -206,18 +206,18 @@ void xoaSach() {
 
     // Dich chuyen cac phan tu phia sau len mot vi tri
     int j;
-    for (j = i; j < soSach - 1; j++) {
-        strcpy(sach_isbn[j], sach_isbn[j + 1]);
-        strcpy(sach_ten[j], sach_ten[j + 1]);
-        strcpy(sach_tacGia[j], sach_tacGia[j + 1]);
-        strcpy(sach_nxb[j], sach_nxb[j + 1]);
-        sach_namXB[j] = sach_namXB[j + 1];
-        strcpy(sach_theLoai[j], sach_theLoai[j + 1]);
-        sach_giaNhap[j] = sach_giaNhap[j + 1];
-        sach_giaBan[j] = sach_giaBan[j + 1];
-        sach_soLuong[j] = sach_soLuong[j + 1];
+    for (j = i; j < soLuongDauSach - 1; j++) {
+        strcpy(isbnSach[j], isbnSach[j + 1]);
+        strcpy(tenSach[j], tenSach[j + 1]);
+        strcpy(tacGiaSach[j], tacGiaSach[j + 1]);
+        strcpy(nxbSach[j], nxbSach[j + 1]);
+        namXBSach[j] = namXBSach[j + 1];
+        strcpy(theLoaiSach[j], theLoaiSach[j + 1]);
+        giaNhapSach[j] = giaNhapSach[j + 1];
+        giaBanSach[j] = giaBanSach[j + 1];
+        soLuongTonKhoSach[j] = soLuongTonKhoSach[j + 1];
     }
-    soSach--;
+    soLuongDauSach--;
     printf(">> Xoa sach thanh cong!\n");
 }
 
@@ -229,7 +229,7 @@ void timSachTheoISBN() {
     printf("Nhap ISBN: ");
     docChuoi(isbnNhap, MAX_ISBN);
 
-    int i = timChiSoSach(isbnNhap);
+    int i = timChisoLuongDauSach(isbnNhap);
     if (i == -1) {
         printf("Khong tim thay sach voi ISBN '%s'.\n", isbnNhap);
     } else {
@@ -247,8 +247,8 @@ void timSachTheoTen() {
     docChuoi(ten, MAX_TEN);
 
     int timThay = 0, i;
-    for (i = 0; i < soSach; i++) {
-        if (chuaXauCon(sach_ten[i], ten)) {
+    for (i = 0; i < soLuongDauSach; i++) {
+        if (chuaXauCon(tenSach[i], ten)) {
             printf("\nKet qua %d:\n", timThay + 1);
             inThongTinSach(i);
             timThay++;
