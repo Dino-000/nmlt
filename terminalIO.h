@@ -9,5 +9,3 @@ int nhapSoNguyen();
 float nhapSoThuc();
 
 int chuaXauCon(const char chuoi[], const char mau[]);
-
-void inDuongKe(int soKy, char kyTu);

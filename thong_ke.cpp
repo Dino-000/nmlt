@@ -1,6 +1,6 @@
 #include "thong_ke.h"
 #include "data.h"
-#include "utils.h"
+#include "terminalIO.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -139,7 +139,6 @@ void thongKeSachHetHang() {
         if (soLuongTonKhoSach[i] == 0) {
             if (timThay == 0) {
                 printf("%-14s %-32s %-20s %-12s\n", "ISBN", "Ten Sach", "Tac Gia", "The Loai");
-                inDuongKe(82, '-');
             }
             printf("%-14s %-32s %-20s %-12s\n", isbnSach[i], tenSach[i], tacGiaSach[i], theLoaiSach[i]);
             timThay++;

@@ -1,6 +1,6 @@
 #include "sach.h"
 #include "data.h"
-#include "utils.h"
+#include "terminalIO.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -44,12 +44,10 @@ void xemDanhSachSach() {
         return;
     }
     printf("%-4s %-14s %-28s %-20s %-12s %-8s\n", "STT", "ISBN", "Ten Sach", "Tac Gia", "The Loai", "Ton Kho");
-    inDuongKe(90, '-');
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
         printf("%-4d %-14s %-28s %-20s %-12s %-8d\n", i + 1, isbnSach[i], tenSach[i], tacGiaSach[i], theLoaiSach[i], soLuongTonKhoSach[i]);
     }
-    inDuongKe(90, '=');
 }
 
 /*

@@ -1,6 +1,6 @@
 #include "khach_hang.h"
 #include "data.h"
-#include "utils.h"
+#include "terminalIO.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -42,12 +42,10 @@ void xemDanhSachKhachHang() {
         return;
     }
     printf("%-4s %-12s %-30s %-14s %-8s\n", "STT", "Ma KH", "Ho Ten", "SDT", "Loai The");
-    inDuongKe(74, '-');
     int i;
     for (i = 0; i < soLuongKH; i++) {
         printf("%-4d %-12s %-30s %-14s %-8s\n", i + 1, maKH[i], tenKH[i], sdtKH[i], loaiTheKH[i] == 1 ? "VIP" : "Thuong");
     }
-    inDuongKe(74, '=');
 }
 
 /*

@@ -4,7 +4,7 @@
 #include "hoa_don.h"
 #include "kho.h"
 #include "thong_ke.h"
-#include "utils.h"
+#include "terminalIO.h"
 
 // Hien thhi menu cua chuong trinh
 void hienThiMenuChinh() {

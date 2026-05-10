@@ -1,6 +1,6 @@
 #include "kho.h"
 #include "data.h"
-#include "utils.h"
+#include "terminalIO.h"
 #include "sach.h"
 #include <stdio.h>
 #include <string.h>
@@ -72,7 +72,6 @@ void xemTonKho() {
     }
 
     printf("%-14s %-32s %-12s %8s  %s\n", "ISBN", "Ten Sach", "The Loai", "Ton Kho", "Trang Thai");
-    inDuongKe(82, '-');
 
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
@@ -86,7 +85,6 @@ void xemTonKho() {
         }
         printf("%-14s %-32s %-12s %8d  %s\n", isbnSach[i], tenSach[i], theLoaiSach[i], soLuongTonKhoSach[i], trangThaiBuf);
     }
-    inDuongKe(82, '=');
 }
 
 /*

@@ -2,7 +2,7 @@
 #include <string.h>
 #include "hoa_don.h"
 #include "data.h"
-#include "utils.h"
+#include "terminalIO.h"
 #include "khach_hang.h"
 #include "sach.h"
 
@@ -178,7 +178,6 @@ void lapHoaDon() {
     printf("Khach hang  : %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
     printf("Ngay lap    : %s\n",  ngay);
     printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
-    inDuongKe(80, '-');
 
     float tamTinhRaw = 0.0f;
     float tamTinhHD  = 0.0f;
@@ -190,7 +189,6 @@ void lapHoaDon() {
         tamTinhHD  += giaTungMH[j];
     }
 
-    inDuongKe(80, '-');
     // Check va ap dung giam gia neu co giam gia theo so luong tung the loai
     if (tamTinhHD < tamTinhRaw - 0.5f) {
         printf("%*s %14.0f\n", 66, "Tong chua giam:", tamTinhRaw);
@@ -205,7 +203,6 @@ void lapHoaDon() {
     }
     printf("%*s %14.0f\n", 66, "Thue VAT (10%):", tamTinhHD * 0.10f);
     printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTien);
-    inDuongKe(80, '=');
 
     // Luu chinh thuc va cap nhat ton kho
     for (j = 0; j < soMatHang; j++) {
@@ -225,12 +222,10 @@ void xemDanhSachHoaDon() {
         return;
     }
     printf("%-4s %-10s %-12s %-12s %16s\n", "STT", "Ma HD", "Ma KH", "Ngay Lap", "Tong Tien");
-    inDuongKe(60, '-');
     int i;
     for (i = 0; i < soLuongHoaDon; i++) {
         printf("%-4d %-10s %-12s %-12s %16.0f\n", i + 1, maHoaDon[i], maHoaDonKH[i], ngayLapHoaDon[i], tongTienHoaDon[i]);
     }
-    inDuongKe(60, '=');
 }
 
 /*
@@ -263,7 +258,6 @@ void xemChiTietHoaDon() {
     printf("\nNgay lap    : %s\n",            ngayLapHoaDon[indexHD]);
 
     printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
-    inDuongKe(80, '-');
 
     float giaTungMH[20];
     float tongTien = (chiSoKH >= 0)
@@ -287,7 +281,6 @@ void xemChiTietHoaDon() {
         tamTinh += thanhTien;
     }
 
-    inDuongKe(80, '-');
     if (chiSoKH >= 0) {
         printf("%*s %14.0f\n", 66, "Tong truoc giam:", tamTinh);
         if (loaiTheKH[chiSoKH] == 1) {
@@ -297,7 +290,6 @@ void xemChiTietHoaDon() {
         printf("%*s %14.0f\n", 66, "VAT (10%):", tamTinh * 0.10f);
     }
     printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTienHoaDon[indexHD]);
-    inDuongKe(80, '=');
 }
 
 /*

@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "terminalIO.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -59,17 +59,4 @@ float nhapSoThuc() {
  */
 int chuaXauCon(const char chuoi[], const char mau[]) {
     return (strstr(chuoi, mau) != NULL) ? 1 : 0;
-}
-
-/*
- * Tham so: soKyTu - so ki tu can in
- *          kyTu   - ky tu duong ke (vd '-', '=')
- * In n lan ki tu 'kyTu' roi in xuong dong.
- */
-void inDuongKe(int soKyTu, char kyTu) {
-    int i;
-    for (i = 0; i < soKyTu; i++) {
-        putchar(kyTu);
-    }
-    putchar('\n');
 }
