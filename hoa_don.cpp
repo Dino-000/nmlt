@@ -77,6 +77,88 @@ float tinhTongTien(int indexHD, int chiSoKH, float giaTungMH[20]) {
     return tongTien;
 }
 
+// Nhap danh sach mat hang cho hoa don
+// Tham số: char dsISBNTam[][14] - mang chua ISBN cac mat hang, `int soLuongTam[]` - mang chua so luong tung mat hang, `int maxItems` - so luong toi da
+// Tra ve: so mat hang da nhap (khong phai tong so luong)
+int nhapDanhSachMatHang(char dsISBNTam[][14], int soLuongTam[], int maxItems) {
+    int soMatHang = 0;
+    printf("Nhap tung mat hang (ISBN + so luong). Nhap 'xong' de ket thuc.\n");
+
+    while (soMatHang < maxItems) {
+        char isbn[14];
+        printf("  ISBN mat hang %d (hoac 'xong'):  \n", soMatHang + 1);
+        docChuoi(isbn, 14);
+
+        if (strcmp(isbn, "xong") == 0 || strlen(isbn) == 0) {
+            break;
+        }
+
+        int chisoLuongDauSach = timChisoLuongDauSach(isbn);
+        if (chisoLuongDauSach == -1) {
+            printf("  Khong tim thay sach ISBN '%s'. Nhap lai.\n", isbn);
+            continue;
+        }
+
+        printf("  Sach: %s | Gia: %.0f | Ton kho: %d\n", tenSach[chisoLuongDauSach], giaBanSach[chisoLuongDauSach], soLuongTonKhoSach[chisoLuongDauSach]);
+        printf("  So luong mua: ");
+        int soLuong = nhapSoNguyen();
+
+        if (soLuong <= 0) {
+            printf("  So luong phai lon hon 0.\n");
+            continue;
+        }
+        if (soLuong > soLuongTonKhoSach[chisoLuongDauSach]) {
+            printf("  Khong du hang! Ton kho: %d quyen.\n", soLuongTonKhoSach[chisoLuongDauSach]);
+            continue;
+        }
+
+        strcpy(dsISBNTam[soMatHang], isbn);
+        soLuongTam[soMatHang] = soLuong;
+        soMatHang++;
+    }
+    return soMatHang;
+}
+
+// Hien thi tom tat hoa don (tat ca in ra, bao gom giam gia va VAT)
+// Tham số: `int indexHD` - index cua hoa don, `int chiSoKH` - index cua khach hang, `char dsISBNTam[][14]` - mang chua ISBN cac mat hang, `int soLuongTam[]` - mang chua so luong tung mat hang, `int soMatHang` - so mat hang, `float giaTungMH[20]` - mang chua gia tung mat hang, `float tongTien` - tong tien cua hoa don  
+// Tra ve: void
+void hienThiTomTatHoaDon(int indexHD, int chiSoKH, char dsISBNTam[][14], int soLuongTam[], int soMatHang, float giaTungMH[20], float tongTien) {
+    printf("\n---------- TOM TAT HOA DON ----------\n");
+    printf("Ma hoa don  : %s\n",  maHoaDon[indexHD]);
+    printf("Khach hang  : %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
+    printf("Ngay lap    : %s\n",  ngayLapHoaDon[indexHD]);
+    printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
+
+    float tamTinhRaw = 0.0f;
+    float tamTinhHD  = 0.0f;
+    int j;
+    for (j = 0; j < soMatHang; j++) {
+        int chisoLuongDauSach = timChisoLuongDauSach(dsISBNTam[j]);
+        float thanhTienRaw = 0.0f;
+        if (chisoLuongDauSach >= 0) {
+            thanhTienRaw = giaBanSach[chisoLuongDauSach] * (float)soLuongTam[j];
+            printf("%-14s %-28s %8d %12.0f %14.0f\n", dsISBNTam[j], tenSach[chisoLuongDauSach], soLuongTam[j], giaBanSach[chisoLuongDauSach], thanhTienRaw);
+        } else {
+            printf("%-14s %-28s %8d %12.0f %14.0f\n", dsISBNTam[j], "(da xoa)", soLuongTam[j], 0.0f, 0.0f);
+        }
+        tamTinhRaw += thanhTienRaw;
+        tamTinhHD  += giaTungMH[j];
+    }
+
+    if (tamTinhHD < tamTinhRaw - 0.5f) {
+        printf("%*s %14.0f\n",66, "Tong chua giam:", tamTinhRaw);
+        printf("%*s %14.0f\n",66, "Giam cung the loai (5%):", tamTinhHD - tamTinhRaw);
+    }
+    printf("%*s %14.0f\n", 66, "Tong truoc giam VIP:", tamTinhHD);
+    if (loaiTheKH[chiSoKH] == 1) {
+        printf("%*s %13.0f%%\n", 66, "Giam gia VIP (10%):", (float)(0.10f * 100));
+        tamTinhHD *= (1.0f - 0.10f);
+        printf("%*s %14.0f\n", 66, "Sau giam VIP:", tamTinhHD);
+    }
+    printf("%*s %14.0f\n", 66, "Thue VAT (10%):", tamTinhHD * 0.10f);
+    printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTien);
+}
+
 // Mục đích: Thu thập thông tin, tính tổng, lưu hóa đơn và cập nhật tồn kho
 // Tham số: khong co
 // Trả về: void
@@ -106,42 +188,7 @@ void lapHoaDon() {
     int soMatHang = 0;
     char dsISBNTam[20][14];
     int soLuongTam[20];
-
-    printf("Nhap tung mat hang (ISBN + so luong). Nhap 'xong' de ket thuc.\n");
-
-    while (soMatHang < 20) {
-        char isbn[14];
-        printf("  ISBN mat hang %d (hoac 'xong'):  \n", soMatHang + 1);
-        docChuoi(isbn, 14);
-
-        if (strcmp(isbn, "xong") == 0 || strlen(isbn) == 0) {
-            break;
-        }
-
-        int chisoLuongDauSach = timChisoLuongDauSach(isbn);
-        if (chisoLuongDauSach == -1) {
-            printf("  Khong tim thay sach ISBN '%s'. Nhap lai.\n", isbn);
-            continue;
-        }
-
-        // Hien thi thong tin sach va nhap so luong mua
-        printf("  Sach: %s | Gia: %.0f | Ton kho: %d\n", tenSach[chisoLuongDauSach], giaBanSach[chisoLuongDauSach], soLuongTonKhoSach[chisoLuongDauSach]);
-        printf("  So luong mua: ");
-        int soLuong = nhapSoNguyen();
-
-        if (soLuong <= 0) {
-            printf("  So luong phai lon hon 0.\n");
-            continue;
-        }
-        if (soLuong > soLuongTonKhoSach[chisoLuongDauSach]) {
-            printf("  Khong du hang! Ton kho: %d quyen.\n", soLuongTonKhoSach[chisoLuongDauSach]);
-            continue;
-        }
-
-        strcpy(dsISBNTam[soMatHang], isbn);
-        soLuongTam[soMatHang] = soLuong;
-        soMatHang++;
-    }
+    soMatHang = nhapDanhSachMatHang(dsISBNTam, soLuongTam, 20);
 
     if (soMatHang == 0) {
         printf("Hoa don khong co mat hang nao. Huy bo.\n");
@@ -166,39 +213,9 @@ void lapHoaDon() {
     float tongTien = tinhTongTien(indexHD, chiSoKH, giaTungMH);
     tongTienHoaDon[indexHD] = tongTien;
 
-    // Hien thi tom tat hoa don
-    printf("\n---------- TOM TAT HOA DON ----------\n");
-    printf("Ma hoa don  : %s\n",  maHoaDon[indexHD]);
-    printf("Khach hang  : %s (%s)\n", tenKH[chiSoKH], loaiTheKH[chiSoKH] == 1 ? "VIP" : "Thuong");
-    printf("Ngay lap    : %s\n",  ngay);
-    printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
+    hienThiTomTatHoaDon(indexHD, chiSoKH, dsISBNTam, soLuongTam, soMatHang, giaTungMH, tongTien);
 
-    float tamTinhRaw = 0.0f;
-    float tamTinhHD  = 0.0f;
-    for (j = 0; j < soMatHang; j++) {
-        int chisoLuongDauSach = timChisoLuongDauSach(dsISBNTam[j]);
-        float thanhTienRaw = giaBanSach[chisoLuongDauSach] * (float)soLuongTam[j];
-        printf("%-14s %-28s %8d %12.0f %14.0f\n", dsISBNTam[j], tenSach[chisoLuongDauSach], soLuongTam[j], giaBanSach[chisoLuongDauSach], thanhTienRaw);
-        tamTinhRaw += thanhTienRaw;
-        tamTinhHD  += giaTungMH[j];
-    }
-
-    // Check va ap dung giam gia neu co giam gia theo so luong tung the loai
-    if (tamTinhHD < tamTinhRaw - 0.5f) {
-        printf("%*s %14.0f\n", 66, "Tong chua giam:", tamTinhRaw);
-        printf("%*s %14.0f\n", 66, "Giam cung the loai (5%):", tamTinhHD - tamTinhRaw);
-    }
-    printf("%*s %14.0f\n", 66, "Tong truoc giam VIP:", tamTinhHD);
-    // Check va ap dung giam gia neu co giam gia VIP
-    if (loaiTheKH[chiSoKH] == 1) {
-        printf("%*s %13.0f%%\n", 66, "Giam gia VIP (10%):", (float)(0.10f * 100));
-        tamTinhHD *= (1.0f - 0.10f);
-        printf("%*s %14.0f\n", 66, "Sau giam VIP:", tamTinhHD);
-    }
-    printf("%*s %14.0f\n", 66, "Thue VAT (10%):", tamTinhHD * 0.10f);
-    printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTien);
-
-    // Luu chinh thuc va cap nhat ton kho
+    // Luu va cap nhat ton kho
     for (j = 0; j < soMatHang; j++) {
         int chisoLuongDauSach = timChisoLuongDauSach(dsISBNTam[j]);
         soLuongTonKhoSach[chisoLuongDauSach] -= soLuongTam[j];
@@ -253,9 +270,7 @@ void xemChiTietHoaDon() {
     printf("%-14s %-28s %8s %12s %14s\n", "ISBN", "Ten sach", "SL", "Don gia", "Thanh tien");
 
     float giaTungMH[20];
-    float tongTien = (chiSoKH >= 0)
-                     ? tinhTongTien(indexHD, chiSoKH, giaTungMH)
-                     : tongTienHoaDon[indexHD];
+    float tongTien = (chiSoKH >= 0) ? tinhTongTien(indexHD, chiSoKH, giaTungMH) : tongTienHoaDon[indexHD];
 
     float tamTinh = 0.0f;
     int j;
