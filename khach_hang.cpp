@@ -4,10 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-/* -------------------------------------------------------
- * Ham noi bo: in thong tin chi tiet cua mot khach hang
- * Tham so: i - chi so trong mang du lieu
- * ------------------------------------------------------- */
+// Mục đích: In thông tin chi tiết của khách hàng
+// Tham số: `int i` (chỉ số trong mảng)
+// Trả về: void
 void inThongTinKhachHang(int i) {
     printf("  Ma KH      : %s\n", maKH[i]);
     printf("  Ho ten     : %s\n", tenKH[i]);
@@ -18,11 +17,9 @@ void inThongTinKhachHang(int i) {
     printf("  Loai the   : %s\n", loaiTheKH[i] == 1 ? "VIP" : "Thuong");
 }
 
-/*
- * Tham so: maKHCanTim[10] - ma khach hang can tim
- * Duyet mang maKH de tim vi tri cua khach hang.
- * Gia tri tra ve: index cua khach hang >= 0 neu tim thay, -1 neu khong tim thay
- */
+// Mục đích: Tìm chỉ số khách hàng theo mã
+// Tham số: `char maKHCanTim[10]`
+// Trả về: `int` (index >=0 hoặc -1)
 int timdexKH(char maKHCanTim[10]) {
     int i;
     for (i = 0; i < soLuongKH; i++) {
@@ -33,9 +30,9 @@ int timdexKH(char maKHCanTim[10]) {
     return -1;
 }
 
-/*
- * In bang danh sach tat ca khach hang.
- */
+// Mục đích: Hiển thị danh sách khách hàng
+// Tham số: khong co
+// Trả về: void
 void xemDanhSachKhachHang() {
     if (soLuongKH == 0) {
         printf("\nChua co khach hang nao trong he thong.\n");
@@ -48,10 +45,9 @@ void xemDanhSachKhachHang() {
     }
 }
 
-/*
- * Doc thong tin tu ban phim va them khach hang moi.
- * Bao loi neu ma bi trung hoac mang da day.
- */
+// Mục đích: Nhập và thêm khách hàng mới
+// Tham số: khong co
+// Trả về: void
 void themKhachHang() {
     if (soLuongKH >= 100) {
         printf("\nDanh sach khach hang da day (%d/%d)!\n", soLuongKH, 100);
@@ -96,10 +92,9 @@ void themKhachHang() {
     printf(">> Them khach hang thanh cong!\n");
 }
 
-/*
- * Tim khach hang theo ma, cho phep chinh sua tung truong.
- * Nguoi dung nhan Enter de giu nguyen gia tri cu.
- */
+// Mục đích: Tìm và chỉnh sửa khách hàng theo mã
+// Tham số: khong co
+// Trả về: void
 void chinhSuaKhachHang() {
     char maNhap[10];
     printf("Nhap ma khach hang can chinh sua: ");
@@ -156,10 +151,9 @@ void chinhSuaKhachHang() {
     printf(">> Cap nhat thong tin khach hang thanh cong!\n");
 }
 
-/*
- * Tim khach hang theo ma, xac nhan roi xoa.
- * Dich chuyen mang de lap day vi tri bi xoa.
- */
+// Mục đích: Xóa khách hàng sau xác nhận
+// Tham số: khong co
+// Trả về: void
 void xoaKhachHang() {
     char maNhap[10];
     printf("Nhap ma khach hang can xoa: ");
@@ -197,9 +191,9 @@ void xoaKhachHang() {
     printf(">> Xoa khach hang thanh cong!\n");
 }
 
-/*
- * Duyet mang tim khach hang co so dien thoai chua chuoi nhap vao.
- */
+// Mục đích: Tìm khách hàng theo phần của số điện thoại
+// Tham số: khong co
+// Trả về: void
 void timKhachHangTheoSDT() {
     char sdt[11];
     printf("Nhap so dien thoai (hoac phan SDT): ");
@@ -221,6 +215,8 @@ void timKhachHangTheoSDT() {
 }
 
 // Duyet mang tim khach hang co ho ten chua chuoi nhap vao.
+// Tham số: khong co
+// Trả về: void
 void timKhachHangTheoHoTen() {
     char ten[50];
     printf("Nhap ho ten (hoac mot phan): ");
@@ -242,6 +238,8 @@ void timKhachHangTheoHoTen() {
 }
 
 // Vong lap menu quan ly khach hang, cho nguoi dung chon chuc nang.
+// Tham số: khong co
+// Trả về: void
 void menuKhachHang() {
     int luaChon;
     do {

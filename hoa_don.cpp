@@ -6,14 +6,9 @@
 #include "khach_hang.h"
 #include "sach.h"
 
-/*
- * tinh tong tien hoa don tai chi so indexHD
- * ap dung: giam gia the loai (>5 quyen), giam gia VIP, VAT
- * Tham so: indexHD    - chi so hoa don trong mang
- *          chiSoKH    - chi so khach hang trong mang
- *          giaTungMH - mang float nhan gia sau giam cua tung mat hang (co the NULL neu khong can)
- * Gia tri tra ve: Tong tien cuoi cung (float)
- */
+// Mục đích: Tính tổng tiền hóa đơn (áp dụng giảm giá theo thể loại, VIP, VAT)
+// Tham số: `int indexHD`, `int chiSoKH`, `float giaTungMH[20]` (có thể NULL)
+// Trả về: `float` (tổng tiền)
 float tinhTongTien(int indexHD, int chiSoKH, float giaTungMH[20]) {
     int soMatHang = soMatHangTrongHoaDon[indexHD];
     int j, k;
@@ -82,10 +77,9 @@ float tinhTongTien(int indexHD, int chiSoKH, float giaTungMH[20]) {
     return tongTien;
 }
 
-/*
- * Thu thap thong tin hoa don tu nguoi dung, kiem tra hop le,
- * tinh tong tien va luu vao he thong, dong thoi cap nhat ton kho.
- */
+// Mục đích: Thu thập thông tin, tính tổng, lưu hóa đơn và cập nhật tồn kho
+// Tham số: khong co
+// Trả về: void
 void lapHoaDon() {
     if (soLuongHoaDon >= 100) {
         printf("\nSo hoa don da dat gioi han (%d)!\n", 100);
@@ -213,9 +207,9 @@ void lapHoaDon() {
     printf(">> Lap hoa don %s thanh cong! Tong tien: %.0f VND\n", maHoaDon[indexHD], tongTien);
 }
 
-/*
- * In bang danh sach tat ca hoa don (ma, KH, ngay, tong tien).
- */
+// Mục đích: Hiển thị danh sách hóa đơn (mã, KH, ngày, tổng tiền)
+// Tham số: khong co
+// Trả về: void
 void xemDanhSachHoaDon() {
     if (soLuongHoaDon == 0) {
         printf("\nChua co hoa don nao trong he thong.\n");
@@ -228,10 +222,9 @@ void xemDanhSachHoaDon() {
     }
 }
 
-/*
- * Nhap ma hoa don, tim va hien thi chi tiet tung mat hang,
- * giam gia ap dung va tong tien.
- */
+// Mục đích: Nhập mã hóa đơn, tìm và hiển thị chi tiết (mặt hàng, giảm giá, tổng)
+// Tham số: khong co
+// Trả về: void
 void xemChiTietHoaDon() {
     char maHD[10];
     printf("Nhap ma hoa don: ");
@@ -292,9 +285,9 @@ void xemChiTietHoaDon() {
     printf("%*s %14.0f\n", 66, "TONG TIEN:", tongTienHoaDon[indexHD]);
 }
 
-/*
- * Vong lap menu quan ly hoa don, cho nguoi dung chon chuc nang.
- */
+// Mục đích: Hiển thị menu quản lý hóa đơn
+// Tham số: khong co
+// Trả về: void
 void menuHoaDon() {
     int luaChon;
     do {

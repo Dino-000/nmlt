@@ -32,4 +32,7 @@ extern int soLuongDauSachTrongHoaDon[100][20];
 extern float tongTienHoaDon[100];
 extern int soLuongHoaDon;
 
+// Mục đích: Xuất dữ liệu hiện tại ra định dạng textual (console)
+// Tham số: khong co
+// Trả về: void
 void xuatDataSangFile();

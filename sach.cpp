@@ -4,10 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-/* 
- * in thong tin chi tiet cua mot dau sach
- * Tham so: i - chi so trong mang du lieu
- * ------------------------------------------------------- */
+// Mục đích: In thông tin chi tiết của đầu sách;
+// Tham số: `int i` index cua sach trong mang;
+// Trả về: void
 void inThongTinSach(int i) {
     printf("  ISBN        : %s\n",   isbnSach[i]);
     printf("  Ten sach    : %s\n",   tenSach[i]);
@@ -20,11 +19,9 @@ void inThongTinSach(int i) {
     printf("  Ton kho     : %d quyen\n", soLuongTonKhoSach[i]);
 }
 
-/*
- * Tham so: isbnTim[14] - ma ISBN can tim
- * Duyet mang isbnSach de tim vi tri cua sach.
- * Gia tri tra ve: Chi so >= 0 neu tim thay, -1 neu khong tim thay
- */
+// Mục đích: Tìm chỉ số đầu sách theo ISBN; 
+// Tham số: `char isbnTim[14]` ma so ISBN can tim;
+// Trả về: `int` (index >=0 hoặc -1)
 int timChisoLuongDauSach(char isbnTim[14]) {
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
@@ -35,9 +32,9 @@ int timChisoLuongDauSach(char isbnTim[14]) {
     return -1;
 }
 
-/*
- * In bang danh sach tat ca sach hien co trong he thong.
- */
+// Mục đích: Hiển thị danh sách đầu sách; 
+// Tham số: khong co;
+// Trả về: void
 void xemDanhSachSach() {
     if (soLuongDauSach == 0) {
         printf("\nChua co sach nao trong he thong.\n");
@@ -50,10 +47,9 @@ void xemDanhSachSach() {
     }
 }
 
-/*
- * Doc thong tin tu ban phim va them dau sach moi.
- * Bao loi neu ISBN bi trung hoac mang da day.
- */
+// Mục đích: Nhập từ bàn phím và thêm đầu sách mới;
+// Tham số: khong co;
+// Trả về: void
 void themSach() {
     if (soLuongDauSach >= 100) {
         printf("\nDanh sach sach da day (%d/%d)!\n", soLuongDauSach, 100);
@@ -61,7 +57,7 @@ void themSach() {
     }
 
     char isbnNhap[14];
-    printf("\n========== THEM SACH MOI ==========\n");
+    printf("\n-------------- THEM SACH MOI --------------\n");
 
     printf("ISBN           : ");
     docChuoi(isbnNhap, 14);
@@ -98,17 +94,16 @@ void themSach() {
     printf("Gia ban  (VND) : ");
     giaBanSach[i] = nhapSoThuc();
 
-    printf("So luong nhap  : ");
-    soLuongTonKhoSach[i] = nhapSoNguyen();
+    // Khoi tao ton kho = 0 cho sach moi
+    soLuongTonKhoSach[i] = 0;
 
     soLuongDauSach++;
     printf(">> Them sach thanh cong!\n");
 }
 
-/*
- * Tim sach theo ISBN, cho phep chinh sua tung truong.
- * Nguoi dung nhan Enter de giu nguyen gia tri cu.
- */
+// Mục đích: Tìm và chỉnh sửa thông tin sách theo ISBN;
+// Tham số: khong co;
+// Trả về: void
 void chinhSuaSach() {
     char isbnNhap[14];
     printf("Nhap ISBN sach can chinh sua: ");
@@ -171,10 +166,9 @@ void chinhSuaSach() {
     printf(">> Cap nhat thong tin sach thanh cong!\n");
 }
 
-/*
- * Tim sach theo ISBN, kiem tra ton kho = 0, xac nhan roi xoa.
- * Dich chuyen mang de lap day vi tri bi xoa.
- */
+// Mục đích: Xóa đầu sách (nếu tồn kho=0) sau xác nhận;
+// Tham số: khong co;
+// Trả về: void
 void xoaSach() {
     char isbnNhap[14];
     printf("Nhap ISBN sach can xoa: ");
@@ -219,9 +213,9 @@ void xoaSach() {
     printf(">> Xoa sach thanh cong!\n");
 }
 
-/*
- * Tim chinh xac sach theo ISBN va hien thi chi tiet.
- */
+// Mục đích: Tìm sách theo ISBN và hiển thị chi tiết;
+// Tham số: khong co;
+// Trả về: void
 void timSachTheoISBN() {
     char isbnNhap[14];
     printf("Nhap ISBN: ");
@@ -236,9 +230,9 @@ void timSachTheoISBN() {
     }
 }
 
-/*
- * Duyet mang tim cac sach co ten chua chuoi nhap vao.
- */
+// Mục đích: Tìm các sách có tên chứa chuỗi nhập vào;
+// Tham số: khong co;
+// Trả về: void
 void timSachTheoTen() {
     char ten[50];
     printf("Nhap ten sach (hoac mot phan): ");
@@ -259,9 +253,9 @@ void timSachTheoTen() {
     }
 }
 
-/*
- * Vong lap menu quan ly sach, cho nguoi dung chon chuc nang.
- */
+// Mục đích: Hiển thị menu quản lý sách;
+// Tham số: khong co;
+// Trả về: void
 void menuSach() {
     int luaChon;
     do {

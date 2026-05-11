@@ -33,6 +33,9 @@ int soLuongDauSachTrongHoaDon[100][20];
 float tongTienHoaDon[100];
 int soLuongHoaDon = 0;
 
+// Mục đích: Xuất dữ liệu hiện tại ra định dạng textual (console)
+// Tham số: khong co
+// Trả về: void
 void xuatDataSangFile() {
     for (int i = 0; i < soLuongKH; i++) {
         printf("KH|%s|%s|%s|%s|%s|%s|%d\n", maKH[i], tenKH[i], sdtKH[i], mailKH[i], diaChiKH[i], ngayDangKyKH[i], loaiTheKH[i]);

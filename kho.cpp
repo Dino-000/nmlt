@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 
-/*
- * Tim sach theo ISBN, nhap so luong hang moi ve va cong vao ton kho.
- */
+// Mục đích: Nhập số lượng hàng mới theo ISBN và cộng vào tồn kho
+// Tham số: khong co
+// Trả về: void
 void nhapHangMoi() {
     char isbnNhap[14];
     printf("Nhap ISBN sach: ");
@@ -33,10 +33,9 @@ void nhapHangMoi() {
     printf(">> Cap nhat thanh cong! Ton kho moi: %d quyen.\n", soLuongTonKhoSach[i]);
 }
 
-/*
- * Tim sach theo ISBN, nhap gia tri thay doi (duong: nhap them, am: giam).
- * Kiem tra khong cho phep ton kho am.
- */
+// Mục đích: Điều chỉnh số lượng tồn kho theo ISBN (không cho âm)
+// Tham số: khong co
+// Trả về: void
 void dieuChinhSoLuong() {
     char isbnNhap[14];
     printf("Nhap ISBN sach: ");
@@ -62,34 +61,26 @@ void dieuChinhSoLuong() {
     printf(">> Dieu chinh thanh cong! Ton kho moi: %d quyen.\n", soLuongTonKhoSach[i]);
 }
 
-/*
- * In bang trang thai ton kho, danh dau sap het hang (< 5) va het hang (= 0).
- */
+// Mục đích: Hiển thị trạng thái tồn kho và gắn nhãn sắp hết/hết hàng
+// Tham số: khong co
+// Trả về: void
 void xemTonKho() {
     if (soLuongDauSach == 0) {
         printf("\nChua co sach nao trong he thong.\n");
         return;
     }
 
-    printf("%-14s %-32s %-12s %8s  %s\n", "ISBN", "Ten Sach", "The Loai", "Ton Kho", "Trang Thai");
+    printf("%-14s %-32s %-12s %8s\n", "ISBN", "Ten Sach", "The Loai", "Ton Kho");
 
     int i;
     for (i = 0; i < soLuongDauSach; i++) {
-        char trangThaiBuf[50];
-        if (soLuongTonKhoSach[i] == 0) {
-            strcpy(trangThaiBuf, "[HET HANG]");
-        } else if (soLuongTonKhoSach[i] < 5) {
-            strcpy(trangThaiBuf, "[SAP HET]");
-        } else {
-            trangThaiBuf[0] = '\0';
-        }
-        printf("%-14s %-32s %-12s %8d  %s\n", isbnSach[i], tenSach[i], theLoaiSach[i], soLuongTonKhoSach[i], trangThaiBuf);
+        printf("%-14s %-32s %-12s %8d\n", isbnSach[i], tenSach[i], theLoaiSach[i], soLuongTonKhoSach[i]);
     }
 }
 
-/*
- * Vong lap menu quan ly kho, cho nguoi dung chon chuc nang.
- */
+// Mục đích: Hiển thị menu quản lý kho
+// Tham số: khong co
+// Trả về: void
 void menuKho() {
     int luaChon;
     do {

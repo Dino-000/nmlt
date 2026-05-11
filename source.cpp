@@ -6,20 +6,20 @@
 #include "thong_ke.h"
 #include "terminalIO.h"
 
-// Hien thhi menu cua chuong trinh
-void hienThiMenuChinh() {
+// Mục đích: Hiển thị menu chính của chương trình
+// Tham số: khong co
+// Trả về: void 
+void hienThiMenuChinh(  ) {
     printf("\n");
+    printf("  QUAN LY NHA SACH ONLINE\n");
     printf("  ============================================\n");
-    printf("  ||     QUAN LY NHA SACH ONLINE           ||\n");
-    printf("  ============================================\n");
-    printf("  ||  1. Quan ly khach hang                ||\n");
-    printf("  ||  2. Quan ly sach                      ||\n");
-    printf("  ||  3. Lap hoa don ban hang              ||\n");
-    printf("  ||  4. Quan ly kho                       ||\n");
-    printf("  ||  5. Thong ke                          ||\n");
-    printf("  ||  0. Thoat                             ||\n");
-    printf("  ============================================\n");
-    printf("  Lua chon: ");
+    printf("  1. Quan ly khach hang\n");
+    printf("  2. Quan ly sach\n");
+    printf("  3. Lap hoa don ban hang\n");
+    printf("  4. Quan ly kho\n");
+    printf("  5. Thong ke\n");
+    printf("  0. Thoat\n");
+    printf("  Nhap lua chon: ");
 }
 
 int main() {
@@ -44,10 +44,10 @@ int main() {
                 menuThongKe();
                 break;
             case 0:
-                printf("\n  Tam biet! Hen gap lai.\n\n");
+                printf("\n Bye bye \n\n");
                 break;
             default:
-                printf("  Lua chon khong hop le! Vui long chon lai.\n");
+                printf("Lua chon khong hop le! Vui long chon lai.\n");
         }
     } while (luaChon != 0);
     return 0;

@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-/*
- * Cong toan bo soLuongTonKhoSach[i] va hien thi ket qua.
- */
+// Mục đích: Tính tổng số lượng đầu sách và hiển thị kết quả
+// Tham số: khong co
+// Trả về: `void`
 void thongKeTongsoLuongDauSach() {
     if (soLuongDauSach == 0) {
         printf("Chua co sach nao trong he thong.\n");
@@ -22,10 +22,9 @@ void thongKeTongsoLuongDauSach() {
     printf("Tong so quyen : %d quyen\n", tongSoQuyen);
 }
 
-/*
- * Xay dung danh sach the loai duy nhat, dem so dau sach
- * va tong so quyen theo tung the loai roi hien thi.
- */
+// Mục đích: Thống kê sách theo thể loại (số đầu sách và tổng quyển)
+// Tham số: khong co
+// Trả về: `void`
 void thongKeSachTheoTheLoai() {
     if (soLuongDauSach == 0) {
         printf("Chua co sach nao trong he thong.\n");
@@ -63,9 +62,9 @@ void thongKeSachTheoTheLoai() {
     }
 }
 
-/*
- * Dem so khach hang Thuong va VIP va hien thi.
- */
+// Mục đích: Đếm và hiển thị số khách hàng theo loại thẻ (Thường/VIP)
+// Tham số: khong co
+// Trả về: `void`
 void thongKeKhachHangTheoLoaiThe() {
     if (soLuongKH == 0) {
         printf("Chua co khach hang nao trong he thong.\n");
@@ -82,10 +81,9 @@ void thongKeKhachHangTheoLoaiThe() {
     printf("  The VIP           : %d\n", soVIP);
 }
 
-/*
- * Cho nguoi dung chon tinh theo ngay (dd/mm/yyyy) hoac thang (mm/yyyy).
- * Duyet danh sach hoa don, cong tong tongTienHoaDon cua cac hoa don khop.
- */
+// Mục đích: Tính doanh thu theo ngày hoặc theo tháng
+// Tham số: khong co
+// Trả về: `void`
 void tinhDoanhThu() {
     printf("1. Theo ngay  (dd/mm/yyyy)\n");
     printf("2. Theo thang (mm/yyyy)\n");
@@ -130,9 +128,9 @@ void tinhDoanhThu() {
     }
 }
 
-/*
- * Duyet mang, in thong tin cac sach co soLuongTonKhoSach = 0.
- */
+// Mục đích: Liệt kê các đầu sách đã hết hàng (tồn kho = 0)
+// Tham số: khong co
+// Trả về: `void`
 void thongKeSachHetHang() {
     int timThay = 0, i;
     for (i = 0; i < soLuongDauSach; i++) {
@@ -151,9 +149,9 @@ void thongKeSachHetHang() {
     }
 }
 
-/*
- * Vong lap menu thong ke, cho nguoi dung chon chuc nang.
- */
+// Mục đích: Hiển thị menu thống kê
+// Tham số: khong co
+// Trả về: `void`
 void menuThongKe() {
     int luaChon;
     do {
